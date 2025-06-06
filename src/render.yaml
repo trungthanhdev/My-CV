@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: zen-cv-api
+    env: docker
+    repo: https://github.com/trungthanhdev/My-CV
+    branch: main
+    dockerfilePath: ./Dockerfile
+    plan: free
+    autoDeploy: true
