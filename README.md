@@ -1,3 +1,883 @@
-# Hello jira from github
+# Title
 
-- [ ] first task  
+Abstract:xxx
+
+## Papar Information
+
+- Title: `paper name`
+- Authors: `A`,`B`,`C`
+- Preprint: [https://arxiv.org/abs/xx]()
+- Full-preprint: [paper position]()
+- Video: [video position]()
+
+## Install & Dependence
+
+- python
+- pytorch
+- numpy
+
+## Dataset Preparation
+
+| Dataset   | Download     |
+| --------- | ------------ |
+| dataset-A | [download]() |
+| dataset-B | [download]() |
+| dataset-C | [download]() |
+
+## Use
+
+- for train
+  ```
+  python train.py
+  ```
+- for test
+  ```
+  python test.py
+  ```
+
+## Pretrained model
+
+| Model   | Download     |
+| ------- | ------------ |
+| Model-1 | [download]() |
+| Model-2 | [download]() |
+| Model-3 | [download]() |
+
+## Directory Hierarchy
+
+```
+|—— Dockerfile
+|—— ZEN.Application
+|    |—— Application.cs
+|    |—— Core
+|        |—— Authenticate
+|            |—— UserIdentifierProvider.cs
+|        |—— Behaviors
+|            |—— UnitOfWorkBehavior.cs
+|            |—— ValidationBehavior.cs
+|    |—— Services
+|        |—— TokenService.cs
+|    |—— Usecases
+|        |—— ProjectUC
+|            |—— Commands
+|                |—— CreateProjectCommand.cs
+|                |—— UpdateProjectCommand.cs
+|            |—— Query
+|    |—— ZEN.Application.csproj
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— ZEN.Application.deps.json
+|                |—— ZEN.Application.dll
+|                |—— ZEN.Application.pdb
+|                |—— ZEN.Contract.dll
+|                |—— ZEN.Contract.pdb
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|                |—— ZEN.Infrastructure.Mysql.dll
+|                |—— ZEN.Infrastructure.Mysql.pdb
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.Appl.973DA4D4.Up2Date
+|                |—— ZEN.Application.AssemblyInfo.cs
+|                |—— ZEN.Application.AssemblyInfoInputs.cache
+|                |—— ZEN.Application.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.Application.GlobalUsings.g.cs
+|                |—— ZEN.Application.assets.cache
+|                |—— ZEN.Application.csproj.AssemblyReference.cache
+|                |—— ZEN.Application.csproj.CoreCompileInputs.cache
+|                |—— ZEN.Application.csproj.FileListAbsolute.txt
+|                |—— ZEN.Application.dll
+|                |—— ZEN.Application.pdb
+|                |—— ZEN.Application.sourcelink.json
+|                |—— ref
+|                    |—— ZEN.Application.dll
+|                |—— refint
+|                    |—— ZEN.Application.dll
+|        |—— ZEN.Application.csproj.nuget.dgspec.json
+|        |—— ZEN.Application.csproj.nuget.g.props
+|        |—— ZEN.Application.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— ZEN.Contract
+|    |—— AspAccountDto
+|        |—— LoginDto.cs
+|        |—— RegisterDto.cs
+|        |—— ResetPasswordDto.cs
+|        |—— SignUpDto.cs
+|    |—— ProjectDto
+|        |—— Request
+|            |—— ReqCreateProjectDto.cs
+|        |—— Response
+|    |—— ZEN.Contract.csproj
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— ZEN.Contract.deps.json
+|                |—— ZEN.Contract.dll
+|                |—— ZEN.Contract.pdb
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.Cont.1A9A57A3.Up2Date
+|                |—— ZEN.Contract.AssemblyInfo.cs
+|                |—— ZEN.Contract.AssemblyInfoInputs.cache
+|                |—— ZEN.Contract.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.Contract.GlobalUsings.g.cs
+|                |—— ZEN.Contract.assets.cache
+|                |—— ZEN.Contract.csproj.AssemblyReference.cache
+|                |—— ZEN.Contract.csproj.CoreCompileInputs.cache
+|                |—— ZEN.Contract.csproj.FileListAbsolute.txt
+|                |—— ZEN.Contract.dll
+|                |—— ZEN.Contract.pdb
+|                |—— ZEN.Contract.sourcelink.json
+|                |—— ref
+|                    |—— ZEN.Contract.dll
+|                |—— refint
+|                    |—— ZEN.Contract.dll
+|        |—— ZEN.Contract.csproj.nuget.dgspec.json
+|        |—— ZEN.Contract.csproj.nuget.g.props
+|        |—— ZEN.Contract.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— ZEN.Controller
+|    |—— Configurations
+|        |—— ApiVersionConfig.cs
+|        |—— CorsConfig.cs
+|        |—— HttpClientConfig.cs
+|        |—— JWTConfig.cs
+|        |—— SwaggerConfig.cs
+|    |—— Controllers
+|        |—— StorageController.cs
+|    |—— Endpoints
+|        |—— V1
+|            |—— AccountEndpoint.cs
+|            |—— ProjectEndpoint.cs
+|    |—— Extensions
+|        |—— EndpointExtentions.cs
+|        |—— HttpExtentions.cs
+|    |—— InjectionSerivce.cs
+|    |—— Middlewares
+|        |—— CustomExceptionHandler.cs
+|        |—— TokenRevalidator.cs
+|    |—— Types
+|        |—— APIResponse.cs
+|    |—— ZEN.Controller.csproj
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— ZEN.Application.dll
+|                |—— ZEN.Application.pdb
+|                |—— ZEN.Contract.dll
+|                |—— ZEN.Contract.pdb
+|                |—— ZEN.Controller.deps.json
+|                |—— ZEN.Controller.dll
+|                |—— ZEN.Controller.pdb
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|                |—— ZEN.Infrastructure.Mysql.dll
+|                |—— ZEN.Infrastructure.Mysql.pdb
+|                |—— ZEN.Infrastructure.dll
+|                |—— ZEN.Infrastructure.pdb
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.Cont.D16F1043.Up2Date
+|                |—— ZEN.Controller.AssemblyInfo.cs
+|                |—— ZEN.Controller.AssemblyInfoInputs.cache
+|                |—— ZEN.Controller.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.Controller.GlobalUsings.g.cs
+|                |—— ZEN.Controller.assets.cache
+|                |—— ZEN.Controller.csproj.AssemblyReference.cache
+|                |—— ZEN.Controller.csproj.CoreCompileInputs.cache
+|                |—— ZEN.Controller.csproj.FileListAbsolute.txt
+|                |—— ZEN.Controller.dll
+|                |—— ZEN.Controller.pdb
+|                |—— ZEN.Controller.sourcelink.json
+|                |—— ref
+|                    |—— ZEN.Controller.dll
+|                |—— refint
+|                    |—— ZEN.Controller.dll
+|        |—— ZEN.Controller.csproj.nuget.dgspec.json
+|        |—— ZEN.Controller.csproj.nuget.g.props
+|        |—— ZEN.Controller.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— ZEN.CoreLib
+|    |—— ZEN.CoreLib.csproj
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— ZEN.CoreLib.deps.json
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.CoreLib.AssemblyInfo.cs
+|                |—— ZEN.CoreLib.AssemblyInfoInputs.cache
+|                |—— ZEN.CoreLib.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.CoreLib.GlobalUsings.g.cs
+|                |—— ZEN.CoreLib.assets.cache
+|                |—— ZEN.CoreLib.csproj.AssemblyReference.cache
+|                |—— ZEN.CoreLib.csproj.CoreCompileInputs.cache
+|                |—— ZEN.CoreLib.csproj.FileListAbsolute.txt
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.CoreLib.sourcelink.json
+|                |—— ref
+|                    |—— ZEN.CoreLib.dll
+|                |—— refint
+|                    |—— ZEN.CoreLib.dll
+|        |—— ZEN.CoreLib.csproj.nuget.dgspec.json
+|        |—— ZEN.CoreLib.csproj.nuget.g.props
+|        |—— ZEN.CoreLib.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— ZEN.Domain
+|    |—— Common
+|        |—— Abstractions
+|            |—— IAuditableEntity.cs
+|            |—— IExpireEntity.cs
+|            |—— ISoftDeletableEntity.cs
+|        |—— Authenticate
+|            |—— IUserIdentitierProvider.cs
+|            |—— JwtSettings.cs
+|        |—— Events
+|            |—— IDomainEvent.cs
+|            |—— IDomainEventHandler.cs
+|        |—— Primitives
+|            |—— AggregateRoot.cs
+|        |—— Utils
+|            |—— CacheExtension.cs
+|            |—— CryptoHelper.cs
+|            |—— CypherUtils.cs
+|            |—— DateTimeUtils.cs
+|            |—— ECDSAUtil.cs
+|            |—— ObjectCloneUtils.cs
+|            |—— StringUtils.cs
+|    |—— DTO
+|        |—— ReqUpdateProjectDto.cs
+|    |—— Definition
+|        |—— CTErrors.cs
+|        |—— CachingTags.cs
+|        |—— RoleDefines.cs
+|        |—— RuntimeConfig.cs
+|    |—— Entities
+|        |—— Identities
+|            |—— AspUser.cs
+|            |—— Project.cs
+|            |—— RefreshToken.cs
+|            |—— Skill.cs
+|            |—— UserProject.cs
+|            |—— UserSkill.cs
+|            |—— WorkExperience.cs
+|    |—— Services
+|        |—— Dtos
+|            |—— PackageToClientResponse.cs
+|            |—— TokenResponse.cs
+|        |—— IHardwareSpec.cs
+|        |—— ISimpleStorage.cs
+|        |—— ITokenService.cs
+|        |—— IVAdminApiClient.cs
+|    |—— ZEN.Domain.csproj
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.Domain.deps.json
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.Domain.AssemblyInfo.cs
+|                |—— ZEN.Domain.AssemblyInfoInputs.cache
+|                |—— ZEN.Domain.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.Domain.GlobalUsings.g.cs
+|                |—— ZEN.Domain.assets.cache
+|                |—— ZEN.Domain.csproj.AssemblyReference.cache
+|                |—— ZEN.Domain.csproj.CoreCompileInputs.cache
+|                |—— ZEN.Domain.csproj.FileListAbsolute.txt
+|                |—— ZEN.Domain.csproj.Up2Date
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|                |—— ZEN.Domain.sourcelink.json
+|                |—— ref
+|                    |—— ZEN.Domain.dll
+|                |—— refint
+|                    |—— ZEN.Domain.dll
+|        |—— ZEN.Domain.csproj.nuget.dgspec.json
+|        |—— ZEN.Domain.csproj.nuget.g.props
+|        |—— ZEN.Domain.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— ZEN.Infrastructure
+|    |—— Common
+|        |—— Exceptions
+|            |—— ProcessException.cs
+|        |—— Mapping
+|            |—— MappingProfile.cs
+|            |—— MapsterConfig.cs
+|    |—— Extentions
+|        |—— Migration.cs
+|    |—— InSystemProvider
+|        |—— HardwareSpecService.cs
+|    |—— Infrastructure.cs
+|    |—— Integrations
+|        |—— ProvinceOpenAPI
+|            |—— DTO
+|                |—— GetDistrictDTO.cs
+|                |—— GetProvinceDTO.cs
+|                |—— GetWardDTO.cs
+|            |—— ProvinceOpenAPIService.cs
+|        |—— SimpleStorage
+|            |—— GDataService.cs
+|        |—— VAdminApiClient.cs
+|    |—— Persistence
+|        |—— UnitOfWork.cs
+|    |—— ZEN.Infrastructure.csproj
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— ZEN.Contract.dll
+|                |—— ZEN.Contract.pdb
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|                |—— ZEN.Infrastructure.Mysql.dll
+|                |—— ZEN.Infrastructure.Mysql.pdb
+|                |—— ZEN.Infrastructure.deps.json
+|                |—— ZEN.Infrastructure.dll
+|                |—— ZEN.Infrastructure.pdb
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.Infr.F61A962D.Up2Date
+|                |—— ZEN.Infrastructure.AssemblyInfo.cs
+|                |—— ZEN.Infrastructure.AssemblyInfoInputs.cache
+|                |—— ZEN.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.Infrastructure.GlobalUsings.g.cs
+|                |—— ZEN.Infrastructure.assets.cache
+|                |—— ZEN.Infrastructure.csproj.AssemblyReference.cache
+|                |—— ZEN.Infrastructure.csproj.CoreCompileInputs.cache
+|                |—— ZEN.Infrastructure.csproj.FileListAbsolute.txt
+|                |—— ZEN.Infrastructure.dll
+|                |—— ZEN.Infrastructure.pdb
+|                |—— ZEN.Infrastructure.sourcelink.json
+|                |—— ref
+|                    |—— ZEN.Infrastructure.dll
+|                |—— refint
+|                    |—— ZEN.Infrastructure.dll
+|        |—— ZEN.Infrastructure.csproj.nuget.dgspec.json
+|        |—— ZEN.Infrastructure.csproj.nuget.g.props
+|        |—— ZEN.Infrastructure.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— ZEN.Infrastructure.Mysql
+|    |—— InfrastructureMysql.cs
+|    |—— Migrations
+|        |—— 20250606073535_InitDb.Designer.cs
+|        |—— 20250606073535_InitDb.cs
+|        |—— AppDbContextModelSnapshot.cs
+|    |—— Persistence
+|        |—— AppDbContext.cs
+|        |—— Repositories
+|            |—— MainRepository.cs
+|    |—— ZEN.Infrastructure.Mysql.csproj
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— ZEN.Contract.dll
+|                |—— ZEN.Contract.pdb
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|                |—— ZEN.Infrastructure.Mysql.deps.json
+|                |—— ZEN.Infrastructure.Mysql.dll
+|                |—— ZEN.Infrastructure.Mysql.pdb
+|                |—— ZEN.Infrastructure.Mysql.runtimeconfig.json
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.Infr.B15E3D40.Up2Date
+|                |—— ZEN.Infrastructure.Mysql.AssemblyInfo.cs
+|                |—— ZEN.Infrastructure.Mysql.AssemblyInfoInputs.cache
+|                |—— ZEN.Infrastructure.Mysql.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.Infrastructure.Mysql.GlobalUsings.g.cs
+|                |—— ZEN.Infrastructure.Mysql.assets.cache
+|                |—— ZEN.Infrastructure.Mysql.csproj.AssemblyReference.cache
+|                |—— ZEN.Infrastructure.Mysql.csproj.CoreCompileInputs.cache
+|                |—— ZEN.Infrastructure.Mysql.csproj.FileListAbsolute.txt
+|                |—— ZEN.Infrastructure.Mysql.dll
+|                |—— ZEN.Infrastructure.Mysql.genruntimeconfig.cache
+|                |—— ZEN.Infrastructure.Mysql.pdb
+|                |—— ZEN.Infrastructure.Mysql.sourcelink.json
+|                |—— ref
+|                    |—— ZEN.Infrastructure.Mysql.dll
+|                |—— refint
+|                    |—— ZEN.Infrastructure.Mysql.dll
+|        |—— ZEN.Infrastructure.Mysql.csproj.EntityFrameworkCore.targets
+|        |—— ZEN.Infrastructure.Mysql.csproj.nuget.dgspec.json
+|        |—— ZEN.Infrastructure.Mysql.csproj.nuget.g.props
+|        |—— ZEN.Infrastructure.Mysql.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— ZEN.Startup
+|    |—— .env
+|    |—— Program.cs
+|    |—— Properties
+|        |—— launchSettings.json
+|    |—— Uploads
+|        |—— office-work.svg
+|    |—— ZEN.Startup.csproj
+|    |—— appsettings.Development.json
+|    |—— appsettings.json
+|    |—— bin
+|        |—— Debug
+|            |—— net9.0
+|                |—— Asp.Versioning.Abstractions.dll
+|                |—— Asp.Versioning.Http.dll
+|                |—— Asp.Versioning.Mvc.ApiExplorer.dll
+|                |—— Asp.Versioning.Mvc.dll
+|                |—— AutoMapper.dll
+|                |—— BouncyCastle.Cryptography.dll
+|                |—— CTCore.DynamicQuery.dll
+|                |—— CommunityToolkit.HighPerformance.dll
+|                |—— DocumentFormat.OpenXml.Framework.dll
+|                |—— DocumentFormat.OpenXml.dll
+|                |—— DotNetEnv.dll
+|                |—— FluentValidation.DependencyInjectionExtensions.dll
+|                |—— FluentValidation.dll
+|                |—— HealthChecks.MySql.dll
+|                |—— HealthChecks.NpgSql.dll
+|                |—— Humanizer.dll
+|                |—— Mapster.Core.dll
+|                |—— Mapster.DependencyInjection.dll
+|                |—— Mapster.dll
+|                |—— MediatR.Contracts.dll
+|                |—— MediatR.dll
+|                |—— Microsoft.AspNetCore.Authentication.JwtBearer.dll
+|                |—— Microsoft.AspNetCore.Cryptography.Internal.dll
+|                |—— Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+|                |—— Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+|                |—— Microsoft.AspNetCore.OData.dll
+|                |—— Microsoft.AspNetCore.OpenApi.dll
+|                |—— Microsoft.Bcl.AsyncInterfaces.dll
+|                |—— Microsoft.Bcl.TimeProvider.dll
+|                |—— Microsoft.Build.Locator.dll
+|                |—— Microsoft.CodeAnalysis.CSharp.Workspaces.dll
+|                |—— Microsoft.CodeAnalysis.CSharp.dll
+|                |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+|                |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.dll
+|                |—— Microsoft.CodeAnalysis.Workspaces.dll
+|                |—— Microsoft.CodeAnalysis.dll
+|                |—— Microsoft.Data.Sqlite.dll
+|                |—— Microsoft.EntityFrameworkCore.Abstractions.dll
+|                |—— Microsoft.EntityFrameworkCore.Design.dll
+|                |—— Microsoft.EntityFrameworkCore.Relational.dll
+|                |—— Microsoft.EntityFrameworkCore.Sqlite.dll
+|                |—— Microsoft.EntityFrameworkCore.dll
+|                |—— Microsoft.Extensions.Caching.Abstractions.dll
+|                |—— Microsoft.Extensions.Caching.Hybrid.dll
+|                |—— Microsoft.Extensions.Caching.Memory.dll
+|                |—— Microsoft.Extensions.Caching.StackExchangeRedis.dll
+|                |—— Microsoft.Extensions.Configuration.Abstractions.dll
+|                |—— Microsoft.Extensions.DependencyInjection.Abstractions.dll
+|                |—— Microsoft.Extensions.DependencyInjection.dll
+|                |—— Microsoft.Extensions.DependencyModel.dll
+|                |—— Microsoft.Extensions.Diagnostics.Abstractions.dll
+|                |—— Microsoft.Extensions.FileProviders.Abstractions.dll
+|                |—— Microsoft.Extensions.Hosting.Abstractions.dll
+|                |—— Microsoft.Extensions.Identity.Core.dll
+|                |—— Microsoft.Extensions.Identity.Stores.dll
+|                |—— Microsoft.Extensions.Logging.Abstractions.dll
+|                |—— Microsoft.Extensions.Logging.dll
+|                |—— Microsoft.Extensions.Options.dll
+|                |—— Microsoft.Extensions.Primitives.dll
+|                |—— Microsoft.IdentityModel.Abstractions.dll
+|                |—— Microsoft.IdentityModel.JsonWebTokens.dll
+|                |—— Microsoft.IdentityModel.Logging.dll
+|                |—— Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+|                |—— Microsoft.IdentityModel.Protocols.dll
+|                |—— Microsoft.IdentityModel.Tokens.dll
+|                |—— Microsoft.OData.Core.dll
+|                |—— Microsoft.OData.Edm.dll
+|                |—— Microsoft.OData.ModelBuilder.dll
+|                |—— Microsoft.OpenApi.dll
+|                |—— Microsoft.Spatial.dll
+|                |—— Minio.dll
+|                |—— Mono.TextTemplating.dll
+|                |—— MySqlConnector.dll
+|                |—— Npgsql.EntityFrameworkCore.PostgreSQL.dll
+|                |—— Npgsql.dll
+|                |—— Pipelines.Sockets.Unofficial.dll
+|                |—— Pomelo.EntityFrameworkCore.MySql.dll
+|                |—— SQLitePCLRaw.batteries_v2.dll
+|                |—— SQLitePCLRaw.core.dll
+|                |—— SQLitePCLRaw.provider.e_sqlite3.dll
+|                |—— Sprache.dll
+|                |—— StackExchange.Redis.dll
+|                |—— Swashbuckle.AspNetCore.Swagger.dll
+|                |—— Swashbuckle.AspNetCore.SwaggerGen.dll
+|                |—— Swashbuckle.AspNetCore.SwaggerUI.dll
+|                |—— System.CodeDom.dll
+|                |—— System.Composition.AttributedModel.dll
+|                |—— System.Composition.Convention.dll
+|                |—— System.Composition.Hosting.dll
+|                |—— System.Composition.Runtime.dll
+|                |—— System.Composition.TypedParts.dll
+|                |—— System.IO.Hashing.dll
+|                |—— System.IO.Packaging.dll
+|                |—— System.IdentityModel.Tokens.Jwt.dll
+|                |—— System.Linq.Dynamic.Core.dll
+|                |—— System.Reactive.dll
+|                |—— System.Text.Json.dll
+|                |—— Uploads
+|                |—— ZEN.Application.dll
+|                |—— ZEN.Application.pdb
+|                |—— ZEN.Contract.dll
+|                |—— ZEN.Contract.pdb
+|                |—— ZEN.Controller.dll
+|                |—— ZEN.Controller.pdb
+|                |—— ZEN.CoreLib.dll
+|                |—— ZEN.CoreLib.pdb
+|                |—— ZEN.Domain.dll
+|                |—— ZEN.Domain.pdb
+|                |—— ZEN.Infrastructure.Mysql.dll
+|                |—— ZEN.Infrastructure.Mysql.pdb
+|                |—— ZEN.Infrastructure.dll
+|                |—— ZEN.Infrastructure.pdb
+|                |—— ZEN.Startup
+|                |—— ZEN.Startup.deps.json
+|                |—— ZEN.Startup.dll
+|                |—— ZEN.Startup.pdb
+|                |—— ZEN.Startup.runtimeconfig.json
+|                |—— ZEN.Startup.staticwebassets.endpoints.json
+|                |—— af
+|                    |—— Humanizer.resources.dll
+|                |—— appsettings.Development.json
+|                |—— appsettings.json
+|                |—— ar
+|                    |—— Humanizer.resources.dll
+|                |—— az
+|                    |—— Humanizer.resources.dll
+|                |—— bg
+|                    |—— Humanizer.resources.dll
+|                |—— bn-BD
+|                    |—— Humanizer.resources.dll
+|                |—— cs
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— da
+|                    |—— Humanizer.resources.dll
+|                |—— de
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— el
+|                    |—— Humanizer.resources.dll
+|                |—— es
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— fa
+|                    |—— Humanizer.resources.dll
+|                |—— fi-FI
+|                    |—— Humanizer.resources.dll
+|                |—— fr
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— fr-BE
+|                    |—— Humanizer.resources.dll
+|                |—— he
+|                    |—— Humanizer.resources.dll
+|                |—— hr
+|                    |—— Humanizer.resources.dll
+|                |—— hu
+|                    |—— Humanizer.resources.dll
+|                |—— hy
+|                    |—— Humanizer.resources.dll
+|                |—— id
+|                    |—— Humanizer.resources.dll
+|                |—— is
+|                    |—— Humanizer.resources.dll
+|                |—— it
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— ja
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— ko
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— ko-KR
+|                    |—— Humanizer.resources.dll
+|                |—— ku
+|                    |—— Humanizer.resources.dll
+|                |—— lv
+|                    |—— Humanizer.resources.dll
+|                |—— ms-MY
+|                    |—— Humanizer.resources.dll
+|                |—— mt
+|                    |—— Humanizer.resources.dll
+|                |—— nb
+|                    |—— Humanizer.resources.dll
+|                |—— nb-NO
+|                    |—— Humanizer.resources.dll
+|                |—— nl
+|                    |—— Humanizer.resources.dll
+|                |—— pl
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— pt
+|                    |—— Humanizer.resources.dll
+|                |—— pt-BR
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— ro
+|                    |—— Humanizer.resources.dll
+|                |—— ru
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— runtimes
+|                    |—— browser-wasm
+|                        |—— nativeassets
+|                            |—— net9.0
+|                                |—— e_sqlite3.a
+|                    |—— linux-arm
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-arm64
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-armel
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-mips64
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-musl-arm
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-musl-arm64
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-musl-s390x
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-musl-x64
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-ppc64le
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-s390x
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-x64
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— linux-x86
+|                        |—— native
+|                            |—— libe_sqlite3.so
+|                    |—— maccatalyst-arm64
+|                        |—— native
+|                            |—— libe_sqlite3.dylib
+|                    |—— maccatalyst-x64
+|                        |—— native
+|                            |—— libe_sqlite3.dylib
+|                    |—— osx-arm64
+|                        |—— native
+|                            |—— libe_sqlite3.dylib
+|                    |—— osx-x64
+|                        |—— native
+|                            |—— libe_sqlite3.dylib
+|                    |—— win-arm
+|                        |—— native
+|                            |—— e_sqlite3.dll
+|                    |—— win-arm64
+|                        |—— native
+|                            |—— e_sqlite3.dll
+|                    |—— win-x64
+|                        |—— native
+|                            |—— e_sqlite3.dll
+|                    |—— win-x86
+|                        |—— native
+|                            |—— e_sqlite3.dll
+|                |—— sk
+|                    |—— Humanizer.resources.dll
+|                |—— sl
+|                    |—— Humanizer.resources.dll
+|                |—— sr
+|                    |—— Humanizer.resources.dll
+|                |—— sr-Latn
+|                    |—— Humanizer.resources.dll
+|                |—— sv
+|                    |—— Humanizer.resources.dll
+|                |—— th-TH
+|                    |—— Humanizer.resources.dll
+|                |—— tr
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— uk
+|                    |—— Humanizer.resources.dll
+|                |—— uz-Cyrl-UZ
+|                    |—— Humanizer.resources.dll
+|                |—— uz-Latn-UZ
+|                    |—— Humanizer.resources.dll
+|                |—— vi
+|                    |—— Humanizer.resources.dll
+|                |—— zh-CN
+|                    |—— Humanizer.resources.dll
+|                |—— zh-Hans
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|                |—— zh-Hant
+|                    |—— Humanizer.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.CSharp.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+|                    |—— Microsoft.CodeAnalysis.Workspaces.resources.dll
+|                    |—— Microsoft.CodeAnalysis.resources.dll
+|    |—— obj
+|        |—— Debug
+|            |—— net9.0
+|                |—— .NETCoreApp,Version=v9.0.AssemblyAttributes.cs
+|                |—— ZEN.Star.A293C56D.Up2Date
+|                |—— ZEN.Startup.AssemblyInfo.cs
+|                |—— ZEN.Startup.AssemblyInfoInputs.cache
+|                |—— ZEN.Startup.GeneratedMSBuildEditorConfig.editorconfig
+|                |—— ZEN.Startup.GlobalUsings.g.cs
+|                |—— ZEN.Startup.MvcApplicationPartsAssemblyInfo.cache
+|                |—— ZEN.Startup.MvcApplicationPartsAssemblyInfo.cs
+|                |—— ZEN.Startup.assets.cache
+|                |—— ZEN.Startup.csproj.AssemblyReference.cache
+|                |—— ZEN.Startup.csproj.CoreCompileInputs.cache
+|                |—— ZEN.Startup.csproj.FileListAbsolute.txt
+|                |—— ZEN.Startup.dll
+|                |—— ZEN.Startup.genruntimeconfig.cache
+|                |—— ZEN.Startup.pdb
+|                |—— ZEN.Startup.sourcelink.json
+|                |—— apphost
+|                |—— ref
+|                    |—— ZEN.Startup.dll
+|                |—— refint
+|                    |—— ZEN.Startup.dll
+|                |—— staticwebassets
+|                    |—— msbuild.build.ZEN.Startup.props
+|                    |—— msbuild.buildMultiTargeting.ZEN.Startup.props
+|                    |—— msbuild.buildTransitive.ZEN.Startup.props
+|                |—— staticwebassets.build.endpoints.json
+|                |—— staticwebassets.build.json
+|        |—— ZEN.Startup.csproj.EntityFrameworkCore.targets
+|        |—— ZEN.Startup.csproj.nuget.dgspec.json
+|        |—— ZEN.Startup.csproj.nuget.g.props
+|        |—— ZEN.Startup.csproj.nuget.g.targets
+|        |—— project.assets.json
+|        |—— project.nuget.cache
+|—— docker-compose.yaml
+|—— render.yaml
+```
+
+## Code Details
+
+### Tested Platform
+
+- software
+  ```
+  OS: Debian unstable (May 2021), Ubuntu LTS
+  Python: 3.8.5 (anaconda)
+  PyTorch: 1.7.1, 1.8.1
+  ```
+- hardware
+  ```
+  CPU: Intel Xeon 6226R
+  GPU: Nvidia RTX3090 (24GB)
+  ```
+
+### Hyper parameters
+
+```
+
+```
+
+## References
+
+- [paper-1]()
+- [paper-2]()
+- [code-1](https://github.com)
+- [code-2](https://github.com)
+
+## License
+
+## Citing
+
+If you use xxx,please use the following BibTeX entry.
+
+```
+
+```
