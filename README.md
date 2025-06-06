@@ -23,6 +23,7 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 - **Database**: PostgreSQL (hosted on Neon)
 - **ORM**: Entity Framework Core (if applicable)
 - **Platform**: macOS / cross-platform
+- **Containerization**: Docker
 
 ---
 
