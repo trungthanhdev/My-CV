@@ -28,6 +28,6 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 # COPY ZEN.Startup/appsettings.json /app/appsettings.json
-COPY ZEN.Startup/appsettings.json /app/appsettings.json
-COPY ZEN.Startup/appsettings.Development.json /app/appsettings.Development.json
+COPY src/ZEN.Startup/appsettings.json /app/appsettings.json
+COPY src/ZEN.Startup/appsettings.Development.json /app/appsettings.Development.json
 ENTRYPOINT ["dotnet", "ZEN.Startup.dll"]
