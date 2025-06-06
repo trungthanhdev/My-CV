@@ -20,6 +20,7 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 
 - **.NET SDK**: .NET 9.0
 - **Architecture**: Clean Architecture, DDD
+- **Cloud Hosting**: Render (Docker-based deployment)
 - **Database**: PostgreSQL (hosted on Neon)
 - **ORM**: Entity Framework Core (if applicable)
 - **Platform**: macOS / cross-platform
