@@ -4,6 +4,6 @@ services:
     env: docker
     repo: https://github.com/trungthanhdev/My-CV
     branch: main
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./src/Dockerfile
     plan: free
     autoDeploy: true
