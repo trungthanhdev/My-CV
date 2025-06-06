@@ -1,0 +1,29 @@
+services:
+  cv.api-be:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - uploads_volume:/data/Uploads
+    ports:
+      - "1000:5005"
+    restart: always
+    environment:
+      - DEMO_MODE=false
+      - DEBUG_MODE=true
+      - DB_LOGGING=true
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_CONNECTION_STRING=Host=ep-fragrant-thunder-a8mhrcli-pooler.eastus2.azure.neon.tech;Database=neondb;Username=neondb_owner;Password=npg_1JdXVCP5Lofr
+      - ONPREMISE=false
+      - JWT_SECRET=qN3uWk7zF3rY9pZ6vT5bL1xA8hJ2oC0dR4mN6eQ1wG7kU5sX
+      - JwtSettings__Issuer=tkp-api
+      - JwtSettings__Audience=tkp-api
+    networks:
+      - zen-net
+      
+volumes:
+  uploads_volume:
+
+networks:
+  zen-net:
+    driver: bridge

@@ -13,7 +13,7 @@ if (!bool.Parse(Environment.GetEnvironmentVariable("DB_LOGGING") ?? "True"))
 {
     builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
 }
-
+builder.WebHost.UseUrls("http://0.0.0.0:5005");
 builder.Services.ApplyDInjectionService(builder.Configuration);
 
 var app = builder.Build();
