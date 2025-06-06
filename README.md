@@ -38,6 +38,6 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 ```bash
 cd /Applications/Personal\ Project/CV/My-CV
 dotnet restore
-cd src/My-CV/ZEN.Startup  # (Replace with actual Startup project name)
+cd src/My-CV/ZEN.Startup
 dotnet run
 ```
