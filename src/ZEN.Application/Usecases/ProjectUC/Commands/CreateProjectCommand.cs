@@ -39,10 +39,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                 duration: dto.duration
             );
             projectRepo.Add(newProject);
-            var userId = provider.UserId;
-            Console.WriteLine($"[DEBUG] UserId resolved: {userId}");
             var newUserProject = UserProject.Create(provider.UserId, newProject.Id);
-            System.Console.WriteLine(provider.UserId);
             userProjectRepo.Add(newUserProject);
 
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 1)

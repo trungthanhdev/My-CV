@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZEN.Contract\ZEN.Contract.csproj" />
+    <ProjectReference Include="..\ZEN.Infrastructure.Mysql\ZEN.Infrastructure.Mysql.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

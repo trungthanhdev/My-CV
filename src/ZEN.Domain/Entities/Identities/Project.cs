@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CTCore.DynamicQuery.Core.Domain;
 using CTCore.DynamicQuery.Core.Primitives;
+using ZEN.Contract.ProjectDto.Request;
 
 namespace ZEN.Domain.Entities.Identities
 {
@@ -68,6 +69,19 @@ namespace ZEN.Domain.Entities.Identities
             )
         {
             return new Project(project_name, description, tech, project_type, is_reality, url_project, url_demo, url_github, duration);
+        }
+
+        public void Update(ReqUpdateProjectDto reqUpdateProjectDto)
+        {
+            this.project_name = reqUpdateProjectDto.project_name ?? this.project_name;
+            this.description = reqUpdateProjectDto.description ?? this.description;
+            this.tech = reqUpdateProjectDto.tech ?? this.tech;
+            this.project_type = reqUpdateProjectDto.project_type ?? this.project_type;
+            this.is_Reality = reqUpdateProjectDto.is_Reality ?? this.is_Reality;
+            this.url_project = reqUpdateProjectDto.url_project ?? this.url_project;
+            this.url_demo = reqUpdateProjectDto.url_demo ?? this.url_demo;
+            this.url_github = reqUpdateProjectDto.url_github ?? this.url_github;
+            this.duration = reqUpdateProjectDto.duration ?? this.duration;
         }
     }
 }

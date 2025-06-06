@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Asp.Versioning.Builder;
+using CTCore.DynamicQuery.Common.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -25,6 +26,7 @@ namespace ZEN.Controller.Endpoints.V1
                 .HasApiVersion(1);
 
             co.MapPost("/create-project", CreateProject).RequireAuthorization();
+            co.MapPatch("/{project_id}", UpdateProject).RequireAuthorization();
             return endpoints;
         }
 
@@ -44,6 +46,26 @@ namespace ZEN.Controller.Endpoints.V1
             catch
             {
                 return Results.Problem("Internal Server Error", statusCode: 500);
+            }
+        }
+
+        private async Task<IResult> UpdateProject(
+            [FromServices] IMediator mediator,
+            [FromRoute] string project_id,
+            [FromBody] ReqUpdateProjectDto arg
+        )
+        {
+            try
+            {
+                return (await mediator.Send(new UpdateProjectCommand(project_id, arg))).ToOk(e => Results.Ok(e));
+            }
+            catch (NotFoundException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 400);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 401);
             }
         }
     }
