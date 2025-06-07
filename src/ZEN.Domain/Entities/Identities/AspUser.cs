@@ -1,8 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CTCore.DynamicQuery.Core.Primitives;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using ZEN.Contract.AspAccountDto;
+using ZEN.Domain.DTO.UserDto.Response;
 using ZEN.Domain.Entities.Identities;
 
 namespace ZEN.Domain.Entities;
@@ -22,6 +26,58 @@ public class AspUser : IdentityUser
     public virtual List<UserSkill> UserSkills { get; set; } = [];
     public virtual List<UserProject> UserProjects { get; set; } = [];
     public virtual List<WorkExperience> WorkExperiences { get; set; } = [];
+
+    public AspUser() { }
+    public AspUser(
+        string fullname,
+        string? university_name,
+        string? address,
+        string? phone_number,
+        string? github,
+        DateTime? dob,
+        string? avatar,
+        string? email)
+    {
+        this.fullname = fullname;
+        this.university_name = university_name;
+        this.address = address;
+        this.phone_number = phone_number;
+        this.github = github;
+        this.dob = dob;
+        this.avatar = avatar;
+        this.Email = email;
+        Validate();
+    }
+    public static AspUser Create(
+        string fullname,
+        string? university_name,
+        string? address,
+        string? phone_number,
+        string? github,
+        DateTime? dob,
+        string? email,
+        string? avatar)
+    {
+        return new AspUser(fullname, university_name, address, phone_number, github, dob, avatar, email);
+    }
+
+    public void Update(ReqUserDto userDto)
+    {
+        this.fullname = userDto.fullname ?? this.fullname;
+        this.university_name = userDto.university_name ?? this.university_name;
+        this.address = userDto.address ?? this.address;
+        this.phone_number = userDto.phone_number ?? this.phone_number;
+        this.github = userDto.github ?? this.github;
+        this.dob = userDto.dob ?? this.dob;
+        this.Email = userDto.email ?? this.Email;
+        this.avatar = userDto.avatar ?? this.avatar;
+    }
+
+    private void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(fullname))
+            throw new BadHttpRequestException("Full name is required!");
+    }
 }
 
 public class AspUserConfiguration : IEntityTypeConfiguration<AspUser>

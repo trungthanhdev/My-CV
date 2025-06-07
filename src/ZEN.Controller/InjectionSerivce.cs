@@ -100,6 +100,8 @@ public static class InjectionService
 
         app.MapEndpoints(versionSet);
         new ProjectEndpoint().MapEndpoints(app, versionSet);
+        new UserEndpoint().MapEndpoints(app, versionSet);
+
 
 
         if (true) //app.Environment.IsDevelopment())
