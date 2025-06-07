@@ -22,6 +22,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
         IUnitOfWork unitOfWork,
         IUserIdentifierProvider provider,
         AppDbContext dbContext,
+        IRepository<UserProject> userProjectrepo,
         IRepository<Project> projectRepo
     ) : ICommandHandler<DeleteProjectCommand, OkResponse>
     {
@@ -35,8 +36,9 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                         .FirstOrDefaultAsync(cancellationToken);
             if (userProject == null) throw new UnauthorizedAccessException("You have no permission!");
 
+            userProjectrepo.Remove(userProject);
             projectRepo.Remove(currentProject);
-            if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
+            if (await unitOfWork.SaveChangeAsync(cancellationToken) > 1)
             {
                 return new CTBaseResult<OkResponse>(new OkResponse($"Delete project {currentProject.Id} successfully!"));
             }
