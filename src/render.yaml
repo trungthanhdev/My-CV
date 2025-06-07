@@ -6,4 +6,4 @@ services:
     branch: main
     dockerfilePath: ./src/Dockerfile
     plan: free
-    autoDeploy: true
+    autoDeploy: false

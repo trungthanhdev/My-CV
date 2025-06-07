@@ -15,11 +15,12 @@ namespace ZEN.Domain.Entities.Identities
         public string? tech { get; set; }
         public string? project_type { get; set; }
         public bool is_Reality { get; set; }
-
         public string? url_project { get; set; }
         public string? url_demo { get; set; }
         public string? url_github { get; set; }
         public string? duration { get; set; }
+        public DateTime? from { get; set; }
+        public DateTime? to { get; set; }
 
         public virtual List<UserProject> UserProjects { get; set; } = [];
 
@@ -33,7 +34,9 @@ namespace ZEN.Domain.Entities.Identities
         string? url_project,
         string? url_demo,
         string? url_github,
-        string? duration
+        string? duration,
+        DateTime? from,
+        DateTime? to
     )
         {
             this.project_name = project_name;
@@ -45,7 +48,8 @@ namespace ZEN.Domain.Entities.Identities
             this.url_demo = url_demo;
             this.url_github = url_github;
             this.duration = duration;
-
+            this.from = from;
+            this.to = to;
             Validate();
         }
         private void Validate()
@@ -65,10 +69,12 @@ namespace ZEN.Domain.Entities.Identities
                 string? url_project,
                 string? url_demo,
                 string? url_github,
-                string? duration
+                string? duration,
+                DateTime? from,
+                DateTime? to
             )
         {
-            return new Project(project_name, description, tech, project_type, is_reality, url_project, url_demo, url_github, duration);
+            return new Project(project_name, description, tech, project_type, is_reality, url_project, url_demo, url_github, duration, from, to);
         }
 
         public void Update(ReqUpdateProjectDto reqUpdateProjectDto)
@@ -82,6 +88,8 @@ namespace ZEN.Domain.Entities.Identities
             this.url_demo = reqUpdateProjectDto.url_demo ?? this.url_demo;
             this.url_github = reqUpdateProjectDto.url_github ?? this.url_github;
             this.duration = reqUpdateProjectDto.duration ?? this.duration;
+            this.from = reqUpdateProjectDto.from ?? this.from;
+            this.to = reqUpdateProjectDto.to ?? this.to;
         }
     }
 }

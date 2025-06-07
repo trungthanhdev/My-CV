@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using ZEN.Application.Usecases.ProjectUC.Commands;
+using ZEN.Application.Usecases.ProjectUC.Query;
 using ZEN.Contract.ProjectDto.Request;
 using ZEN.Controller.Extensions;
 
@@ -25,8 +26,10 @@ namespace ZEN.Controller.Endpoints.V1
                 .WithApiVersionSet(version)
                 .HasApiVersion(1);
 
+            co.MapGet("/", GetProject).RequireAuthorization();
             co.MapPost("/create-project", CreateProject).RequireAuthorization();
             co.MapPatch("/{project_id}", UpdateProject).RequireAuthorization();
+            co.MapDelete("/{project_id}", DeleteProject).RequireAuthorization();
             return endpoints;
         }
 
@@ -61,11 +64,46 @@ namespace ZEN.Controller.Endpoints.V1
             }
             catch (NotFoundException ex)
             {
-                return Results.Problem(ex.Message, statusCode: 400);
+                return Results.Problem(ex.Message, statusCode: 404);
             }
             catch (UnauthorizedAccessException ex)
             {
                 return Results.Problem(ex.Message, statusCode: 401);
+            }
+        }
+
+        private async Task<IResult> DeleteProject(
+            [FromServices] IMediator mediator,
+            [FromRoute] string project_id
+        )
+        {
+            try
+            {
+                return (await mediator.Send(new DeleteProjectCommand(project_id))).ToOk(e => Results.Ok(e));
+            }
+            catch (NotFoundException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 404);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 401);
+            }
+        }
+
+        private async Task<IResult> GetProject(
+            [FromServices] IMediator mediator,
+            [FromQuery] int page_index,
+            [FromQuery] int page_size
+        )
+        {
+            try
+            {
+                return (await mediator.Send(new GetProjectQuery(page_index, page_size))).ToOk(e => Results.Ok(e));
+            }
+            catch (BadHttpRequestException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 400);
             }
         }
     }

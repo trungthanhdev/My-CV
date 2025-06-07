@@ -16,5 +16,7 @@ namespace ZEN.Contract.ProjectDto.Request
         public string? url_demo { get; set; }
         public string? url_github { get; set; }
         public string? duration { get; set; }
+        public DateTime? from { get; set; }
+        public DateTime? to { get; set; }
     }
 }

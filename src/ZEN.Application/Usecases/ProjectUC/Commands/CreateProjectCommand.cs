@@ -36,7 +36,9 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                 url_project: dto.url_project,
                 url_demo: dto.url_demo,
                 url_github: dto.url_github,
-                duration: dto.duration
+                duration: dto.duration,
+                from: dto.from,
+                to: dto.to
             );
             projectRepo.Add(newProject);
             var newUserProject = UserProject.Create(provider.UserId, newProject.Id);
