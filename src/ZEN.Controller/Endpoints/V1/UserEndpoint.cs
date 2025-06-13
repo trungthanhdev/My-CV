@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using ZEN.Application.Usecases.UserUC.Commands;
+using ZEN.Application.Usecases.UserUC.Queries;
 using ZEN.Contract.AspAccountDto;
 using ZEN.Controller.Extensions;
 
@@ -26,6 +27,7 @@ namespace ZEN.Controller.Endpoints.V1
                .HasApiVersion(1);
 
             co.MapPatch("/{user_id}", UpdateProfile).RequireAuthorization();
+            co.MapGet("/", GetProfile).RequireAuthorization();
             return endpoints;
         }
 
@@ -45,6 +47,18 @@ namespace ZEN.Controller.Endpoints.V1
             catch (UnauthorizedAccessException ex)
             {
                 return Results.Problem(ex.Message, statusCode: 401);
+            }
+        }
+        private async Task<IResult> GetProfile(
+            [FromServices] IMediator mediator)
+        {
+            try
+            {
+                return (await mediator.Send(new GetProfileQuery())).ToOk(e => Results.Ok(e));
+            }
+            catch (NotFoundException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 404);
             }
         }
     }

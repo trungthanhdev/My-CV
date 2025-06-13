@@ -21,6 +21,8 @@ namespace ZEN.Contract.AspAccountDto
         public string? mindset { get; set; }
         public string? linkedin_url { get; set; }
         public string? facebook_url { get; set; }
+        public double? GPA { get; set; }
+
 
     }
 }

@@ -30,6 +30,7 @@ public class AspUser : IdentityUser, IAggregationRoot
     public string? mindset { get; set; }
     public string? linkedin_url { get; set; }
     public string? facebook_url { get; set; }
+    public double? GPA { get; set; }
 
     public virtual List<RefreshToken> RefreshTokens { get; set; } = [];
     public virtual List<UserSkill> UserSkills { get; set; } = [];
@@ -53,7 +54,8 @@ public class AspUser : IdentityUser, IAggregationRoot
         string? background,
         string? mindset,
         string? linkedin_url,
-        string? facebook_url)
+        string? facebook_url,
+        double? GPA)
     {
         this.fullname = fullname;
         this.university_name = university_name;
@@ -69,6 +71,7 @@ public class AspUser : IdentityUser, IAggregationRoot
         this.mindset = mindset;
         this.linkedin_url = linkedin_url;
         this.facebook_url = facebook_url;
+        this.GPA = GPA;
         Validate();
     }
     public static AspUser Create(
@@ -85,9 +88,10 @@ public class AspUser : IdentityUser, IAggregationRoot
         string? background = null,
         string? mindset = null,
         string? linkedin_url = null,
-        string? facebook_url = null)
+        string? facebook_url = null,
+        double? GPA = null)
     {
-        return new AspUser(fullname, university_name, address, phone_number, github, dob, avatar, email, position_career, expOfYear, background, mindset, linkedin_url, facebook_url);
+        return new AspUser(fullname, university_name, address, phone_number, github, dob, avatar, email, position_career, expOfYear, background, mindset, linkedin_url, facebook_url, GPA);
     }
 
     public void Update(ReqUserDto userDto)
@@ -106,6 +110,7 @@ public class AspUser : IdentityUser, IAggregationRoot
         this.mindset = userDto.mindset ?? this.mindset;
         this.linkedin_url = userDto.linkedin_url ?? this.linkedin_url;
         this.facebook_url = userDto.facebook_url ?? this.facebook_url;
+        this.GPA = userDto.GPA ?? GPA;
     }
 
     private void Validate()

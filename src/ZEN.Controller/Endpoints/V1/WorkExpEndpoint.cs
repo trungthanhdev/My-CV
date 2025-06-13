@@ -30,6 +30,7 @@ namespace ZEN.Controller.Endpoints.V1
             co.MapPost("/", AddWorkExperience).RequireAuthorization();
             co.MapPatch("/{we_id}", UpdateWorkExperience).RequireAuthorization();
             co.MapGet("/", GetAllWorkExperience).RequireAuthorization();
+            co.MapDelete("/{we_id}", DeleteWorkExperience).RequireAuthorization();
             return endpoints;
         }
         private async Task<IResult> AddWorkExperience(
@@ -75,10 +76,10 @@ namespace ZEN.Controller.Endpoints.V1
             }
         }
         private async Task<IResult> GetAllWorkExperience(
-             [FromServices] IMediator mediator,
-             [FromQuery] int page_index,
-             [FromQuery] int page_size
-         )
+            [FromServices] IMediator mediator,
+            [FromQuery] int page_index,
+            [FromQuery] int page_size
+        )
         {
             try
             {
@@ -93,6 +94,24 @@ namespace ZEN.Controller.Endpoints.V1
                 return Results.Problem(ex.Message, statusCode: 400);
             }
             catch (BadHttpRequestException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 400);
+            }
+        }
+        private async Task<IResult> DeleteWorkExperience(
+            [FromServices] IMediator mediator,
+            [FromRoute] string we_id
+        )
+        {
+            try
+            {
+                return (await mediator.Send(new DeleteWorkExperienceCommand(we_id))).ToOk(e => Results.Ok(e));
+            }
+            catch (NotFoundException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 400);
+            }
+            catch (UnauthorizedAccessException ex)
             {
                 return Results.Problem(ex.Message, statusCode: 400);
             }
