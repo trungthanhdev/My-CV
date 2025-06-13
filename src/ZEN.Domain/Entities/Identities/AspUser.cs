@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CTCore.DynamicQuery.Common.Exceptions;
 using CTCore.DynamicQuery.Core.Primitives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ZEN.Contract.AspAccountDto;
 using ZEN.Domain.DTO.UserDto.Response;
+using ZEN.Domain.DTO.WorkExperienceDto.Request;
 using ZEN.Domain.Entities.Identities;
 using ZEN.Domain.Interfaces;
 
@@ -34,9 +36,7 @@ public class AspUser : IdentityUser, IAggregationRoot
     public virtual List<UserProject> UserProjects { get; set; } = [];
     public virtual List<WorkExperience> WorkExperiences { get; set; } = [];
 
-    // public IReadOnlyCollection<UserProject> userProjects => UserProjects.AsReadOnly();
-    // public IReadOnlyCollection<WorkExperience> workExperiences => WorkExperiences.AsReadOnly();
-    // public IReadOnlyCollection<UserSkill> userSkills => UserSkills.AsReadOnly();
+    private IReadOnlyCollection<WorkExperience> we => WorkExperiences.AsReadOnly();
 
     public AspUser() { }
     public AspUser(
@@ -114,11 +114,18 @@ public class AspUser : IdentityUser, IAggregationRoot
             throw new BadHttpRequestException("Full name is required!");
     }
 
-    // public void AddSkill(string skill, string user_id)
-    // {
-    //     var userSkill = new UserSkill(skill, user_id);
-    //     UserSkills.Add(userSkill);
-    // }
+    public void AddWorkExperience(ReqWorkExperienceDto dto, string user_id)
+    {
+        var newWE = WorkExperience.Create(user_id, dto.company_name, dto.position, dto.duration, dto.description, dto.project_id);
+        WorkExperiences.Add(newWE);
+    }
+
+    public void UpdateWorkExperience(ReqWorkExperienceDto dto, string we_id)
+    {
+        var currentWE = WorkExperiences.FirstOrDefault(x => x.Id == we_id);
+        if (currentWE is null) throw new NotFoundException("Work experience not found!");
+        currentWE.Update(dto);
+    }
 }
 
 public class AspUserConfiguration : IEntityTypeConfiguration<AspUser>

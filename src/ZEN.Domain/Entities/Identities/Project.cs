@@ -47,7 +47,6 @@ namespace ZEN.Domain.Entities.Identities
         {
             this.project_name = project_name;
             this.description = description;
-            // this.tech = tech;
             this.project_type = project_type;
             this.is_Reality = is_Reality;
             this.url_project = url_project;
