@@ -14,7 +14,9 @@ if (!bool.Parse(Environment.GetEnvironmentVariable("DB_LOGGING") ?? "True"))
 {
     builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Warning);
 }
-builder.WebHost.UseUrls("http://0.0.0.0:5005");
+// builder.WebHost.UseUrls("http://0.0.0.0:5005");
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5005";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 builder.Services.ApplyDInjectionService(builder.Configuration);
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
