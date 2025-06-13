@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CTCore.DynamicQuery.Core.Domain.Interfaces;
 using CTCore.DynamicQuery.Core.Mediators.Interfaces;
 using CTCore.DynamicQuery.Core.Primitives;
+using Microsoft.AspNetCore.Http;
 using ZEN.Contract.ProjectDto.Request;
 using ZEN.Domain.Common.Authenticate;
 using ZEN.Domain.Definition;
@@ -20,7 +21,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
     public class CreateProjectCommandHandler(
         IUnitOfWork unitOfWork,
         IRepository<Project> projectRepo,
-        IRepository<UserProject> userProjectRepo,
+        // IRepository<UserProject> userProjectRepo,
         IUserIdentifierProvider provider
     ) : ICommandHandler<CreateProjectCommand, OkResponse>
     {
@@ -30,7 +31,6 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
             var newProject = Project.Create(
                 project_name: dto.project_name,
                 description: dto.description,
-                tech: dto.tech,
                 project_type: dto.project_type,
                 is_reality: dto.is_Reality,
                 url_project: dto.url_project,
@@ -41,8 +41,12 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                 to: dto.to
             );
             projectRepo.Add(newProject);
-            var newUserProject = UserProject.Create(provider.UserId, newProject.Id);
-            userProjectRepo.Add(newUserProject);
+            if (dto.tech is null) throw new BadHttpRequestException("Tech are required!");
+            foreach (var tech in dto.tech)
+            {
+                newProject.AddTechToProject(tech.tech_name, newProject.Id);
+            }
+            newProject.AddUserProject(provider.UserId, newProject.Id);
 
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 1)
             {

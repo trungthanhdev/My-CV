@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ZEN.CoreLib\ZEN.CoreLib.csproj" />
+    <ProjectReference Include="..\ZEN.ZEN.Infrastructure.Mysql\ZEN.ZEN.Infrastructure.Mysql.csproj" />
   </ItemGroup>
 
 </Project>

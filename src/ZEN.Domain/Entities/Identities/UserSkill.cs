@@ -16,5 +16,12 @@ namespace ZEN.Domain.Entities.Identities
         [ForeignKey(nameof(Skill))]
         public string? skill_id { get; set; }
         public virtual Skill Skill { get; set; } = default!;
+
+        private UserSkill() { }
+        private UserSkill(string user_id, string skill_id)
+        {
+            this.user_id = user_id;
+            this.skill_id = skill_id;
+        }
     }
 }

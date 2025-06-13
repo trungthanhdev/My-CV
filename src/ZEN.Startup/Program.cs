@@ -1,5 +1,6 @@
 
 using ZEN.Controller;
+using ZEN.Controller.Extensions;
 using ZEN.Infrastructure.Mysql.Persistence;
 
 DotNetEnv.Env.Load();
@@ -15,6 +16,11 @@ if (!bool.Parse(Environment.GetEnvironmentVariable("DB_LOGGING") ?? "True"))
 }
 builder.WebHost.UseUrls("http://0.0.0.0:5005");
 builder.Services.ApplyDInjectionService(builder.Configuration);
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new DateTimeJsonConverter());
+    });
 
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())

@@ -39,7 +39,18 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
             {
                 throw new NotFoundException("Project not found!");
             }
+
+            var projectTech = await dbContext.Teches
+                        .AsNoTracking()
+                        .Where(x => x.project_id == request.Project_Id)
+                        .ToListAsync(cancellationToken);
+            foreach (var tech in projectTech)
+            {
+                dbContext.Teches.Remove(tech);
+            }
+            currentProject.CreateNewTech(request.Arg.tech!, currentProject.Id);
             currentProject.Update(request.Arg);
+
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {
                 return new CTBaseResult<OkResponse>(new OkResponse($"Update project {currentProject.Id} successfully!"));

@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ZEN.Contract.AspAccountDto;
 using ZEN.Domain.DTO.UserDto.Response;
 using ZEN.Domain.Entities.Identities;
+using ZEN.Domain.Interfaces;
 
 namespace ZEN.Domain.Entities;
 
-public class AspUser : IdentityUser
+public class AspUser : IdentityUser, IAggregationRoot
 {
     [StringLength(256)]
     public string fullname { get; set; } = default!;
@@ -21,22 +22,38 @@ public class AspUser : IdentityUser
     public string? github { get; set; }
     public DateTime? dob { get; set; }
     public string? avatar { get; set; }
+    public string? position_career { get; set; }
+    public int? expOfYear { get; set; }
+    public string? background { get; set; }
+    public string? mindset { get; set; }
+    public string? linkedin_url { get; set; }
+    public string? facebook_url { get; set; }
 
     public virtual List<RefreshToken> RefreshTokens { get; set; } = [];
     public virtual List<UserSkill> UserSkills { get; set; } = [];
     public virtual List<UserProject> UserProjects { get; set; } = [];
     public virtual List<WorkExperience> WorkExperiences { get; set; } = [];
 
+    // public IReadOnlyCollection<UserProject> userProjects => UserProjects.AsReadOnly();
+    // public IReadOnlyCollection<WorkExperience> workExperiences => WorkExperiences.AsReadOnly();
+    // public IReadOnlyCollection<UserSkill> userSkills => UserSkills.AsReadOnly();
+
     public AspUser() { }
     public AspUser(
-        string fullname,
+       string fullname,
         string? university_name,
         string? address,
         string? phone_number,
         string? github,
         DateTime? dob,
         string? avatar,
-        string? email)
+        string? email,
+        string? position_career,
+        int? expOfYear,
+        string? background,
+        string? mindset,
+        string? linkedin_url,
+        string? facebook_url)
     {
         this.fullname = fullname;
         this.university_name = university_name;
@@ -46,19 +63,31 @@ public class AspUser : IdentityUser
         this.dob = dob;
         this.avatar = avatar;
         this.Email = email;
+        this.position_career = position_career;
+        this.expOfYear = expOfYear;
+        this.background = background;
+        this.mindset = mindset;
+        this.linkedin_url = linkedin_url;
+        this.facebook_url = facebook_url;
         Validate();
     }
     public static AspUser Create(
         string fullname,
-        string? university_name,
-        string? address,
-        string? phone_number,
-        string? github,
-        DateTime? dob,
-        string? email,
-        string? avatar)
+        string? university_name = null,
+        string? address = null,
+        string? phone_number = null,
+        string? github = null,
+        DateTime? dob = null,
+        string? avatar = null,
+        string? email = null,
+        string? position_career = null,
+        int? expOfYear = null,
+        string? background = null,
+        string? mindset = null,
+        string? linkedin_url = null,
+        string? facebook_url = null)
     {
-        return new AspUser(fullname, university_name, address, phone_number, github, dob, avatar, email);
+        return new AspUser(fullname, university_name, address, phone_number, github, dob, avatar, email, position_career, expOfYear, background, mindset, linkedin_url, facebook_url);
     }
 
     public void Update(ReqUserDto userDto)
@@ -71,6 +100,12 @@ public class AspUser : IdentityUser
         this.dob = userDto.dob ?? this.dob;
         this.Email = userDto.email ?? this.Email;
         this.avatar = userDto.avatar ?? this.avatar;
+        this.position_career = userDto.position_career ?? this.position_career;
+        this.expOfYear = userDto.expOfYear ?? this.expOfYear;
+        this.background = userDto.background ?? this.background;
+        this.mindset = userDto.mindset ?? this.mindset;
+        this.linkedin_url = userDto.linkedin_url ?? this.linkedin_url;
+        this.facebook_url = userDto.facebook_url ?? this.facebook_url;
     }
 
     private void Validate()
@@ -78,6 +113,12 @@ public class AspUser : IdentityUser
         if (string.IsNullOrWhiteSpace(fullname))
             throw new BadHttpRequestException("Full name is required!");
     }
+
+    // public void AddSkill(string skill, string user_id)
+    // {
+    //     var userSkill = new UserSkill(skill, user_id);
+    //     UserSkills.Add(userSkill);
+    // }
 }
 
 public class AspUserConfiguration : IEntityTypeConfiguration<AspUser>

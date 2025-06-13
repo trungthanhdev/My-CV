@@ -15,6 +15,12 @@ namespace ZEN.Contract.AspAccountDto
         public DateTime? dob { get; set; }
         public string? avatar { get; set; }
         public string? email { get; set; }
+        public string? position_career { get; set; }
+        public int? expOfYear { get; set; }
+        public string? background { get; set; }
+        public string? mindset { get; set; }
+        public string? linkedin_url { get; set; }
+        public string? facebook_url { get; set; }
 
     }
 }

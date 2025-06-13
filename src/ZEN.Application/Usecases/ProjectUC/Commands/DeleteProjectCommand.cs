@@ -36,8 +36,14 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                         .FirstOrDefaultAsync(cancellationToken);
             if (userProject == null) throw new UnauthorizedAccessException("You have no permission!");
 
+            // currentProject.DeleteUserProject(provider.UserId);
             userProjectrepo.Remove(userProject);
             projectRepo.Remove(currentProject);
+            var allTech = await dbContext.Teches.Where(x => x.project_id == request.Project_Id).ToListAsync(cancellationToken);
+            foreach (var tech in allTech)
+            {
+                dbContext.Teches.Remove(tech);
+            }
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 1)
             {
                 return new CTBaseResult<OkResponse>(new OkResponse($"Delete project {currentProject.Id} successfully!"));

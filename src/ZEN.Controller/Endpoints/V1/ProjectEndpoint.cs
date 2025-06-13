@@ -46,6 +46,10 @@ namespace ZEN.Controller.Endpoints.V1
             {
                 return Results.Problem(ex.Message, statusCode: 400);
             }
+            catch (BadHttpRequestException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 400);
+            }
             catch
             {
                 return Results.Problem("Internal Server Error", statusCode: 500);
@@ -67,6 +71,10 @@ namespace ZEN.Controller.Endpoints.V1
                 return Results.Problem(ex.Message, statusCode: 404);
             }
             catch (UnauthorizedAccessException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 401);
+            }
+            catch (ArgumentNullException ex)
             {
                 return Results.Problem(ex.Message, statusCode: 401);
             }

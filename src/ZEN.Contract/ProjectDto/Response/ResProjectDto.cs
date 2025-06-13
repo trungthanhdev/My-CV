@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ZEN.Contract.ProjectDto.Request;
 
 namespace ZEN.Contract.ProjectDto.Response
 {
@@ -10,7 +11,6 @@ namespace ZEN.Contract.ProjectDto.Response
         public string? project_id { get; set; }
         public string? project_name { get; set; }
         public string? description { get; set; }
-        public string? tech { get; set; }
         public string? project_type { get; set; }
         public bool? is_Reality { get; set; }
         public string? url_project { get; set; }
@@ -18,6 +18,7 @@ namespace ZEN.Contract.ProjectDto.Response
         public string? url_github { get; set; }
         public string? duration { get; set; }
         public DateTime? from { get; set; }
-        public DateTime? to { get; set; }
+        public string? to { get; set; }
+        public List<TechDto>? teches { get; set; }
     }
 }

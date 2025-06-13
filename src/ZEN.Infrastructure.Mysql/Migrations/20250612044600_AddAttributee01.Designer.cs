@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZEN.Infrastructure.Mysql.Persistence;
@@ -11,9 +12,11 @@ using ZEN.Infrastructure.Mysql.Persistence;
 namespace ZEN.Infrastructure.Mysql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250612044600_AddAttributee01")]
+    partial class AddAttributee01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,8 +333,11 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                     b.Property<string>("project_type")
                         .HasColumnType("text");
 
-                    b.Property<string>("to")
+                    b.Property<string>("tech")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("to")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("url_demo")
                         .HasColumnType("text");

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZEN.Infrastructure.Mysql.Persistence;
@@ -11,9 +12,11 @@ using ZEN.Infrastructure.Mysql.Persistence;
 namespace ZEN.Infrastructure.Mysql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250612043517_AddAttributee")]
+    partial class AddAttributee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -330,8 +333,11 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                     b.Property<string>("project_type")
                         .HasColumnType("text");
 
-                    b.Property<string>("to")
+                    b.Property<string>("tech")
                         .HasColumnType("text");
+
+                    b.Property<DateTime?>("to")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("url_demo")
                         .HasColumnType("text");
@@ -353,9 +359,6 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<string>("position")
-                        .HasColumnType("text");
-
                     b.Property<string>("skill_name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -363,25 +366,6 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SKILL");
-                });
-
-            modelBuilder.Entity("ZEN.Domain.Entities.Identities.Tech", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("project_id")
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("tech_name")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("project_id");
-
-                    b.ToTable("TECH");
                 });
 
             modelBuilder.Entity("ZEN.Domain.Entities.Identities.UserProject", b =>
@@ -410,6 +394,9 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                     b.Property<string>("Id")
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
+
+                    b.Property<string>("position")
+                        .HasColumnType("text");
 
                     b.Property<string>("skill_id")
                         .HasColumnType("character varying(255)");
@@ -556,15 +543,6 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ZEN.Domain.Entities.Identities.Tech", b =>
-                {
-                    b.HasOne("ZEN.Domain.Entities.Identities.Project", "Project")
-                        .WithMany("Teches")
-                        .HasForeignKey("project_id");
-
-                    b.Navigation("Project");
-                });
-
             modelBuilder.Entity("ZEN.Domain.Entities.Identities.UserProject", b =>
                 {
                     b.HasOne("ZEN.Domain.Entities.Identities.Project", "Project")
@@ -628,8 +606,6 @@ namespace ZEN.Infrastructure.Mysql.Migrations
 
             modelBuilder.Entity("ZEN.Domain.Entities.Identities.Project", b =>
                 {
-                    b.Navigation("Teches");
-
                     b.Navigation("UserProjects");
                 });
 

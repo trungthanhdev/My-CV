@@ -8,6 +8,7 @@ using CTCore.DynamicQuery.Core.Primitives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.OData.Results;
 using Microsoft.EntityFrameworkCore;
+using ZEN.Contract.ProjectDto.Request;
 using ZEN.Contract.ProjectDto.Response;
 using ZEN.Contract.ResponsePagination;
 using ZEN.Domain.Common.Authenticate;
@@ -47,6 +48,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Query
             var dataList = await dbContext.Projects
                     .AsNoTracking()
                     .Where(x => userProjectIds.Contains(x.Id))
+                    .Include(x => x.Teches)
                     .OrderByDescending(p => p.from)
                     .Skip(skip)
                     .Take(request.Page_Size)
@@ -55,7 +57,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Query
                         project_id = x.Id,
                         project_name = x.project_name,
                         description = x.description,
-                        tech = x.tech,
+                        // tech = x.tech,
                         project_type = x.project_type,
                         is_Reality = x.is_Reality,
                         url_project = x.url_project,
@@ -63,7 +65,11 @@ namespace ZEN.Application.Usecases.ProjectUC.Query
                         url_github = x.url_github,
                         duration = x.duration,
                         from = x.from,
-                        to = x.to
+                        to = x.to,
+                        teches = x.Teches.Select(t => new TechDto
+                        {
+                            tech_name = t.tech_name!
+                        }).ToList()
                     })
                     .ToListAsync(cancellationToken);
             return new CTBaseResult<PageResultResponse<ResProjectDto>>(new PageResultResponse<ResProjectDto>
