@@ -34,18 +34,24 @@ namespace ZEN.Infrastructure.Integrations.CloudStorage
 
         public async Task<string> UploadPhotoAsync(Stream fileStream, string fileName)
         {
-            var uploadParams = new ImageUploadParams()
+            using (var memoryStream = new MemoryStream())
             {
-                File = new FileDescription(fileName, fileStream),
-                PublicId = fileName,
-                Overwrite = true
-            };
+                await fileStream.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
 
-            var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-            if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
-                throw new Exception("Failed to upload image");
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(fileName, memoryStream),
+                    PublicId = fileName,
+                    Overwrite = true
+                };
 
-            return uploadResult.SecureUrl.AbsoluteUri;
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
+                    throw new Exception("Failed to upload image");
+
+                return uploadResult.SecureUrl.AbsoluteUri;
+            }
         }
     }
 }
