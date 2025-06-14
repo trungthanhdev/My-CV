@@ -6,10 +6,7 @@ using CTCore.DynamicQuery.Common.Exceptions;
 using CTCore.DynamicQuery.Core.Domain.Interfaces;
 using CTCore.DynamicQuery.Core.Mediators.Interfaces;
 using CTCore.DynamicQuery.Core.Primitives;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using ZEN.Contract.SkillDto.Request;
 using ZEN.Domain.Common.Authenticate;
 using ZEN.Domain.Definition;
 using ZEN.Domain.Entities.Identities;
@@ -17,18 +14,19 @@ using ZEN.Infrastructure.Mysql.Persistence;
 
 namespace ZEN.Application.Usecases.SkillUC.Commands
 {
-    public class UpdateSkillCommand(ReqSkillDto arg, string skill_id) : ICommand<OkResponse>
+    public class DeleteSpecificSkillCommand(string skill_id) : ICommand<OkResponse>
     {
-        public ReqSkillDto Arg = arg;
         public string Skill_id = skill_id;
     }
-    public class CreateNewSkillCommandHandler(
-        IUnitOfWork unitOfWork,
+
+    public class DeleteSpecificSkillCommandHandler(
         AppDbContext dbContext,
-        IUserIdentifierProvider provider
-    ) : ICommandHandler<UpdateSkillCommand, OkResponse>
+        IUserIdentifierProvider provider,
+        IUnitOfWork unitOfWork,
+        IRepository<Skill> skillRepo
+    ) : ICommandHandler<DeleteSpecificSkillCommand, OkResponse>
     {
-        public async Task<CTBaseResult<OkResponse>> Handle(UpdateSkillCommand request, CancellationToken cancellationToken)
+        public async Task<CTBaseResult<OkResponse>> Handle(DeleteSpecificSkillCommand request, CancellationToken cancellationToken)
         {
             var currentUser = await dbContext.Users
                         .Where(x => x.Id == provider.UserId)
@@ -38,22 +36,17 @@ namespace ZEN.Application.Usecases.SkillUC.Commands
             var currentSkill = await dbContext.Skills
                         .Where(x => x.Id == request.Skill_id)
                         .FirstOrDefaultAsync(cancellationToken);
-            if (currentSkill is null) throw new NotFoundException("Current skill not found!");
-            if (request.Arg.skill_name == currentSkill.skill_name && request.Arg.position == currentSkill.position)
-                throw new BadHttpRequestException("Nothing changes!");
+            if (currentSkill is null) throw new NotFoundException("Skill not found!");
 
             var currentUserSkill = await dbContext.UserSkills
-                        .AsNoTracking()
-                        .Where(x => x.skill_id == request.Skill_id)
+                        .Where(x => x.user_id == currentUser.Id && x.skill_id == currentSkill.Id)
                         .FirstOrDefaultAsync(cancellationToken);
+            if (currentUserSkill is null) throw new UnauthorizedAccessException("You have no permission!");
 
-            if (currentUserSkill!.user_id != provider.UserId) throw new UnauthorizedAccessException("You have no permission!");
-
-            currentSkill.Update(request.Arg.skill_name ?? currentSkill.skill_name, request.Arg.position ?? currentSkill.position ?? "Default position!");
-
+            skillRepo.Remove(currentSkill);
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {
-                return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.fullname} updated his/her skill successfully!"));
+                return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.fullname} deletes his/her skill successfully!"));
             }
             return CTBaseResult.ErrorServer(CTErrors.FAIL_TO_SAVE);
         }

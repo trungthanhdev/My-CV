@@ -7,6 +7,8 @@ namespace ZEN.Contract.SkillDto.Response
 {
     public class ResSkillDto
     {
+
+        public string? skill_id { get; set; }
         public string? skill_name { get; set; }
         public string? position { get; set; }
     }

@@ -46,13 +46,13 @@ namespace ZEN.Application.Usecases.SkillUC.Commands
                         .ToList();
             if (!userSkillToDelete.Any()) throw new NotFoundException("You do have skill yet!");
 
-            currentUser.DeleteUserSkill(userSkillToDelete);
+            // currentUser.DeleteUserSkill(userSkillToDelete);
 
-            var userSkillsWithNulls = await dbContext.UserSkills
-                   .Where(us => us.user_id == null || us.skill_id == null)
-                   .ToListAsync(cancellationToken);
+            // var userSkillsWithNulls = await dbContext.UserSkills
+            //        .Where(us => us.user_id == null || us.skill_id == null)
+            //        .ToListAsync(cancellationToken);
 
-            dbContext.UserSkills.RemoveRange(userSkillsWithNulls);
+            // dbContext.UserSkills.RemoveRange(userSkillsWithNulls);
 
 
             var skillsToDelete = await dbContext.Skills
