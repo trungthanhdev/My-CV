@@ -38,6 +38,8 @@ public class AspUser : IdentityUser, IAggregationRoot
     public virtual List<WorkExperience> WorkExperiences { get; set; } = [];
 
     private IReadOnlyCollection<WorkExperience> we => WorkExperiences.AsReadOnly();
+    private IReadOnlyCollection<UserSkill> us => UserSkills.AsReadOnly();
+
 
     public AspUser() { }
     public AspUser(
@@ -131,13 +133,30 @@ public class AspUser : IdentityUser, IAggregationRoot
         if (currentWE is null) throw new NotFoundException("Work experience not found!");
         currentWE.Update(dto);
     }
+
+    public void AddUserSkill(string skill_id)
+    {
+        var newUS = UserSkill.Create(this.Id, skill_id);
+        UserSkills.Add(newUS);
+    }
+    public void DeleteUserSkill(List<string> skill_id)
+    {
+        var skillsToRemove = UserSkills
+            .Where(us => us.skill_id != null && skill_id.Contains(us.skill_id))
+            .ToList();
+
+        skillsToRemove.ForEach(us => UserSkills.Remove(us));
+    }
 }
 
 public class AspUserConfiguration : IEntityTypeConfiguration<AspUser>
 {
     public void Configure(EntityTypeBuilder<AspUser> builder)
     {
-
+        builder.HasMany(u => u.UserSkills)
+                       .WithOne(us => us.AspUser)
+                       .HasForeignKey(us => us.user_id)
+                       .OnDelete(DeleteBehavior.Cascade);
         var trungthanh = new AspUser
         {
             Id = "d726c4b1-5a4e-4b89-84af-92c36d3e28aa",

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZEN.Infrastructure.Mysql.Persistence;
@@ -11,9 +12,11 @@ using ZEN.Infrastructure.Mysql.Persistence;
 namespace ZEN.Infrastructure.Mysql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250614112247_AddAttribte000")]
+    partial class AddAttribte000
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -414,9 +417,6 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<string>("SkillId")
-                        .HasColumnType("character varying(255)");
-
                     b.Property<string>("skill_id")
                         .HasColumnType("character varying(255)");
 
@@ -424,8 +424,6 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SkillId");
 
                     b.HasIndex("skill_id");
 
@@ -590,14 +588,9 @@ namespace ZEN.Infrastructure.Mysql.Migrations
 
             modelBuilder.Entity("ZEN.Domain.Entities.Identities.UserSkill", b =>
                 {
-                    b.HasOne("ZEN.Domain.Entities.Identities.Skill", null)
-                        .WithMany("UserSkills")
-                        .HasForeignKey("SkillId");
-
                     b.HasOne("ZEN.Domain.Entities.Identities.Skill", "Skill")
-                        .WithMany()
-                        .HasForeignKey("skill_id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany("UserSkills")
+                        .HasForeignKey("skill_id");
 
                     b.HasOne("ZEN.Domain.Entities.AspUser", "AspUser")
                         .WithMany("UserSkills")

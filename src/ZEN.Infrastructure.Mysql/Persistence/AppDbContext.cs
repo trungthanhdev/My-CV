@@ -35,6 +35,7 @@ public class AppDbContext : IdentityDbContext<AspUser>
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
         var cascadeFKs = modelBuilder.Model
             .GetEntityTypes()
             .SelectMany(t => t.GetForeignKeys())
@@ -46,6 +47,11 @@ public class AppDbContext : IdentityDbContext<AspUser>
         RemovePluralizingTableNameConvention(modelBuilder);
 
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<UserSkill>()
+                .HasOne(us => us.Skill)
+                .WithMany()
+                .HasForeignKey(us => us.skill_id)
+                .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
         modelBuilder.ApplyConfiguration(new AspUserConfiguration());

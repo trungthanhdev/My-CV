@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using ZEN.Application.Usecases.SkillUC.Commands;
 using ZEN.Application.Usecases.UserUC.Commands;
 using ZEN.Application.Usecases.UserUC.Queries;
 using ZEN.Contract.AspAccountDto;
+using ZEN.Contract.SkillDto.Request;
 using ZEN.Controller.Extensions;
 
 namespace ZEN.Controller.Endpoints.V1
@@ -28,6 +30,7 @@ namespace ZEN.Controller.Endpoints.V1
 
             co.MapPatch("/{user_id}", UpdateProfile).RequireAuthorization();
             co.MapGet("/", GetProfile).RequireAuthorization();
+
             return endpoints;
         }
 
