@@ -22,8 +22,9 @@ namespace ZEN.Domain.Entities.Identities
         public string? url_demo { get; set; }
         public string? url_github { get; set; }
         public string? duration { get; set; }
-        public DateTime? from { get; set; }
+        public string? from { get; set; }
         public string? to { get; set; }
+        public string? img_url { get; set; }
 
         public virtual List<UserProject> UserProjects { get; set; } = [];
         public virtual List<Tech> Teches { get; set; } = [];
@@ -41,8 +42,9 @@ namespace ZEN.Domain.Entities.Identities
         string? url_demo,
         string? url_github,
         string? duration,
-        DateTime? from,
-        string? to
+        string? from,
+        string? to,
+        string? img_url
     )
         {
             this.project_name = project_name;
@@ -55,6 +57,7 @@ namespace ZEN.Domain.Entities.Identities
             this.duration = duration;
             this.from = from;
             this.to = to;
+            this.img_url = img_url;
             Validate();
         }
         private void Validate()
@@ -75,11 +78,12 @@ namespace ZEN.Domain.Entities.Identities
                 string? url_demo,
                 string? url_github,
                 string? duration,
-                DateTime? from,
-                string? to
+                string? from,
+                string? to,
+                string? img_url
             )
         {
-            return new Project(project_name, description, project_type, is_reality, url_project, url_demo, url_github, duration, from, to);
+            return new Project(project_name, description, project_type, is_reality, url_project, url_demo, url_github, duration, from, to, img_url);
         }
 
         public void Update(ReqUpdateProjectDto reqUpdateProjectDto)
@@ -94,6 +98,7 @@ namespace ZEN.Domain.Entities.Identities
             this.duration = reqUpdateProjectDto.duration ?? this.duration;
             this.from = reqUpdateProjectDto.from ?? this.from;
             this.to = reqUpdateProjectDto.to ?? this.to;
+            this.img_url = reqUpdateProjectDto.img_url ?? this.img_url;
         }
 
         public void AddUserProject(string user_id, string project_id)

@@ -15,9 +15,10 @@ namespace ZEN.Contract.ProjectDto.Response
         public bool? is_Reality { get; set; }
         public string? url_project { get; set; }
         public string? url_demo { get; set; }
+        public string? img_url { get; set; }
         public string? url_github { get; set; }
         public string? duration { get; set; }
-        public DateTime? from { get; set; }
+        public string? from { get; set; }
         public string? to { get; set; }
         public List<TechDto>? teches { get; set; }
     }

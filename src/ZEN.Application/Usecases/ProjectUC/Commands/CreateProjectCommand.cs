@@ -10,6 +10,7 @@ using ZEN.Contract.ProjectDto.Request;
 using ZEN.Domain.Common.Authenticate;
 using ZEN.Domain.Definition;
 using ZEN.Domain.Entities.Identities;
+using ZEN.Domain.Interfaces;
 
 namespace ZEN.Application.Usecases.ProjectUC.Commands
 {
@@ -22,14 +23,23 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
         IUnitOfWork unitOfWork,
         IRepository<Project> projectRepo,
         // IRepository<UserProject> userProjectRepo,
-        IUserIdentifierProvider provider
+        IUserIdentifierProvider provider,
+        ISavePhotoToCloud savePhotoToCloud
     ) : ICommandHandler<CreateProjectCommand, OkResponse>
     {
         public async Task<CTBaseResult<OkResponse>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
+            var urlImgInDB = "";
+            if (request.Arg.img_url != null || request.Arg?.img_url?.Length > 0)
+            {
+                using var stream = request.Arg!.img_url!.OpenReadStream();
+                var url = await savePhotoToCloud.UploadPhotoAsync(stream, request.Arg.img_url.FileName);
+                urlImgInDB = url;
+            }
+
             var dto = request.Arg;
             var newProject = Project.Create(
-                project_name: dto.project_name,
+                project_name: dto!.project_name,
                 description: dto.description,
                 project_type: dto.project_type,
                 is_reality: dto.is_Reality,
@@ -38,7 +48,8 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                 url_github: dto.url_github,
                 duration: dto.duration,
                 from: dto.from,
-                to: dto.to
+                to: dto.to,
+                img_url: urlImgInDB
             );
             projectRepo.Add(newProject);
             if (dto.tech is null) throw new BadHttpRequestException("Tech are required!");

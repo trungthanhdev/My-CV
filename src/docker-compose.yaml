@@ -18,6 +18,9 @@ services:
       - JWT_SECRET=qN3uWk7zF3rY9pZ6vT5bL1xA8hJ2oC0dR4mN6eQ1wG7kU5sX
       - JwtSettings__Issuer=tkp-api
       - JwtSettings__Audience=tkp-api
+      - CLOUDNAME=dzhhz7fnr
+      - APIKEY=628783393559294
+      - APISECRET=z_sUmo0cJWkX82NwyKdFNZ-cBl8
     networks:
       - zen-net
       

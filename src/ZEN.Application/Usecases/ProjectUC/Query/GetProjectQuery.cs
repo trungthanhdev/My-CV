@@ -57,7 +57,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Query
                         project_id = x.Id,
                         project_name = x.project_name,
                         description = x.description,
-                        // tech = x.tech,
+                        img_url = x.img_url,
                         project_type = x.project_type,
                         is_Reality = x.is_Reality,
                         url_project = x.url_project,

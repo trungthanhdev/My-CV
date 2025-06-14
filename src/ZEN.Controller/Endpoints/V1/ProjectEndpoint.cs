@@ -27,15 +27,15 @@ namespace ZEN.Controller.Endpoints.V1
                 .HasApiVersion(1);
 
             co.MapGet("/", GetProject).RequireAuthorization();
-            co.MapPost("/create-project", CreateProject).RequireAuthorization();
-            co.MapPatch("/{project_id}", UpdateProject).RequireAuthorization();
+            co.MapPost("/create-project", CreateProject).RequireAuthorization().DisableAntiforgery();
+            co.MapPatch("/{project_id}", UpdateProject).RequireAuthorization().DisableAntiforgery();
             co.MapDelete("/{project_id}", DeleteProject).RequireAuthorization();
             return endpoints;
         }
 
         private async Task<IResult> CreateProject(
             [FromServices] IMediator mediator,
-            [FromBody] ReqCreateProjectDto arg
+            [FromForm] ReqCreateProjectDto arg
         )
         {
             try

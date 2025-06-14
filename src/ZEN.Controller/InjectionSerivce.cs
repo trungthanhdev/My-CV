@@ -134,7 +134,7 @@ public static class InjectionService
         app.UseMiddleware<CustomExceptionHandler>();
 
         app.UseAuthorization();
-
+        // app.UseAntiforgery();
         app.MapControllers();
 
         // app.MapIdentityApi<AspUser>();

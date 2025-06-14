@@ -15,6 +15,8 @@ using ZEN.Infrastructure.Mysql.Persistence;
 using ZEN.Domain.Services;
 using ZEN.Infrastructure.InSystemProvider;
 using ZEN.Domain.Definition;
+using ZEN.Domain.Interfaces;
+using ZEN.Infrastructure.Integrations.CloudStorage;
 
 namespace ZEN.Infrastructure;
 
@@ -44,6 +46,7 @@ public static class Infrastructure
 
         services.AddScoped<IHardwareSpec, HardwareSpecService>();
         services.AddScoped<IVAdminApiClient, VAdminApiClient>();
+        services.AddScoped<ISavePhotoToCloud, SavePhotoToCloud>();
         #endregion
     }
 

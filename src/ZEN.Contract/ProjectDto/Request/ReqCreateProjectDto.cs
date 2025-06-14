@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using ZEN.Domain.Entities.Identities;
 
 namespace ZEN.Contract.ProjectDto.Request
@@ -17,8 +18,9 @@ namespace ZEN.Contract.ProjectDto.Request
         public string? url_demo { get; set; }
         public string? url_github { get; set; }
         public string? duration { get; set; }
-        public DateTime? from { get; set; }
+        public string? from { get; set; }
         public string? to { get; set; }
+        public IFormFile? img_url { get; set; }
     }
     // public class TechDto
     // {
