@@ -1,0 +1,26 @@
+name: my-cv
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  cv-be-api:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Build backend
+        run: dotnet build ./src/ZEN.Startup/ZEN.Startup.csproj --configuration Release
+
+      - name: Trigger deploy on Render
+        if: success()
+        run: |
+          curl -X POST "https://api.render.com/deploy/srv-d11bhuumcj7s73a2gipg?key=${{ secrets.RENDER_DEPLOY_KEY }}"
