@@ -18,6 +18,10 @@ using ZEN.Domain.Definition;
 using ZEN.Domain.Interfaces;
 using ZEN.Infrastructure.Integrations.CloudStorage;
 using ZEN.Infrastructure.Integrations.SendMail;
+// using Microsoft.Extensions.Caching.StackExchangeRedis;
+using ZEN.Infrastructure.Integrations.Redis;
+using StackExchange.Redis;
+using System.Security.Authentication;
 
 namespace ZEN.Infrastructure;
 
@@ -26,6 +30,9 @@ public static class Infrastructure
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         var opts = new DbContextOptionsBuilder();
+        //---- Get redis connectionString -------
+
+        // -----------------------
 
         if (!RuntimeConfig.IsOnPremise)
         {
@@ -49,7 +56,21 @@ public static class Infrastructure
         services.AddScoped<IVAdminApiClient, VAdminApiClient>();
         services.AddScoped<ISavePhotoToCloud, SavePhotoToCloud>();
         services.AddScoped<ISendMail, SendMail>();
+
         #endregion
+
+        // services.AddScoped<IRedisCache, RedisCache>();
+        services.AddScoped<IRedisCache>(sp =>
+        {
+            var connStr = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING")!;
+            return new RedisCache(connStr);
+        });
+        // services.AddStackExchangeRedisCache(options =>
+        //    {
+        //        options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING")!;
+        //        options.InstanceName = "Portfolio_";
+        //    });
+
     }
 
     private static void ApplyIdentityBuilder<TContext>(this IServiceCollection services)

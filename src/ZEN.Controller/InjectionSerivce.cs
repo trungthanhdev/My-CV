@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using ZEN.Domain.Definition;
 using ZEN.Controller.Endpoints.V1;
+using StackExchange.Redis;
 
 namespace ZEN.Controller;
 
@@ -77,14 +78,21 @@ public static class InjectionService
 
             };
         });
-        if (RuntimeConfig.IsRedis)
-        {
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING")!;
-                options.InstanceName = "VTKCache_";
-            });
-        }
+        // if (RuntimeConfig.IsRedis)
+        // {
+        // services.AddStackExchangeRedisCache(options =>
+        // {
+        //     options.Configuration = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING")!;
+        //     options.InstanceName = "VTKCache_";
+        // });
+
+        //     //----------  Inject Redis --------
+        //     // var redisConnectionString = Environment.GetEnvironmentVariable("REDIS_CONNECTION_STRING")!;
+        //     // services.AddSingleton<IConnectionMultiplexer>(sp =>
+        //     // {
+        //     //     return ConnectionMultiplexer.Connect(redisConnectionString);
+        //     // });
+        // }
         services.AddScoped<TokenRevalidator>();
     }
 
