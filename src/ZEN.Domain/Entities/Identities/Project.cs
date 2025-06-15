@@ -86,7 +86,7 @@ namespace ZEN.Domain.Entities.Identities
             return new Project(project_name, description, project_type, is_reality, url_project, url_demo, url_github, duration, from, to, img_url);
         }
 
-        public void Update(ReqUpdateProjectDto reqUpdateProjectDto)
+        public void Update(ReqUpdateProjectDto reqUpdateProjectDto, string updated_img)
         {
             this.project_name = reqUpdateProjectDto.project_name ?? this.project_name;
             this.description = reqUpdateProjectDto.description ?? this.description;
@@ -98,7 +98,7 @@ namespace ZEN.Domain.Entities.Identities
             this.duration = reqUpdateProjectDto.duration ?? this.duration;
             this.from = reqUpdateProjectDto.from ?? this.from;
             this.to = reqUpdateProjectDto.to ?? this.to;
-            this.img_url = reqUpdateProjectDto.img_url ?? this.img_url;
+            this.img_url = updated_img ?? img_url;
         }
 
         public void AddUserProject(string user_id, string project_id)

@@ -28,7 +28,7 @@ namespace ZEN.Controller.Endpoints.V1
                .WithApiVersionSet(version)
                .HasApiVersion(1);
 
-            co.MapPatch("/{user_id}", UpdateProfile).RequireAuthorization();
+            co.MapPatch("/{user_id}", UpdateProfile).RequireAuthorization().DisableAntiforgery();
             co.MapGet("/", GetProfile).RequireAuthorization();
 
             return endpoints;
@@ -37,7 +37,7 @@ namespace ZEN.Controller.Endpoints.V1
         private async Task<IResult> UpdateProfile(
             [FromServices] IMediator mediator,
             [FromRoute] string user_id,
-            [FromBody] ReqUserDto arg)
+            [FromForm] ReqUserDto arg)
         {
             try
             {
@@ -48,6 +48,10 @@ namespace ZEN.Controller.Endpoints.V1
                 return Results.Problem(ex.Message, statusCode: 404);
             }
             catch (UnauthorizedAccessException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 401);
+            }
+            catch (ArgumentNullException ex)
             {
                 return Results.Problem(ex.Message, statusCode: 401);
             }

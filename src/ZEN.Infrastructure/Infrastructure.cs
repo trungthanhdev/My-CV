@@ -17,6 +17,7 @@ using ZEN.Infrastructure.InSystemProvider;
 using ZEN.Domain.Definition;
 using ZEN.Domain.Interfaces;
 using ZEN.Infrastructure.Integrations.CloudStorage;
+using ZEN.Infrastructure.Integrations.SendMail;
 
 namespace ZEN.Infrastructure;
 
@@ -47,6 +48,7 @@ public static class Infrastructure
         services.AddScoped<IHardwareSpec, HardwareSpecService>();
         services.AddScoped<IVAdminApiClient, VAdminApiClient>();
         services.AddScoped<ISavePhotoToCloud, SavePhotoToCloud>();
+        services.AddScoped<ISendMail, SendMail>();
         #endregion
     }
 

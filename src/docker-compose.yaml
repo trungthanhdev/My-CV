@@ -21,6 +21,8 @@ services:
       - CLOUDNAME=dzhhz7fnr
       - APIKEY=628783393559294
       - APISECRET=z_sUmo0cJWkX82NwyKdFNZ-cBl8
+      - SENDGRIDTEMPLATE=d-464e0ae8ce824f8c9c4a5ab05b46052f
+      - VERIFIEDEMAIL=buithanh10112000@gmail.com
     networks:
       - zen-net
       

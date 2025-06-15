@@ -2,11 +2,13 @@ using CTCore.DynamicQuery.Common.Exceptions;
 using CTCore.DynamicQuery.Core.Domain.Interfaces;
 using CTCore.DynamicQuery.Core.Mediators.Interfaces;
 using CTCore.DynamicQuery.Core.Primitives;
+using DocumentFormat.OpenXml.Office2021.Excel.Pivot;
 using Microsoft.EntityFrameworkCore;
 using ZEN.Contract.ProjectDto.Request;
 using ZEN.Domain.Common.Authenticate;
 using ZEN.Domain.Definition;
 using ZEN.Domain.Entities.Identities;
+using ZEN.Domain.Interfaces;
 using ZEN.Infrastructure.Mysql.Persistence;
 
 namespace ZEN.Application.Usecases.ProjectUC.Commands
@@ -20,7 +22,8 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
         IRepository<Project> projectRepo,
         IUnitOfWork unitOfWork,
         IUserIdentifierProvider provider,
-        AppDbContext dbContext
+        AppDbContext dbContext,
+        ISavePhotoToCloud savePhotoToCloud
     ) : ICommandHandler<UpdateProjectCommand, OkResponse>
     {
         public async Task<CTBaseResult<OkResponse>> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
@@ -40,6 +43,22 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                 throw new NotFoundException("Project not found!");
             }
 
+            var urlImgInDB = "";
+            if (request.Arg.img_url != null || request.Arg?.img_url?.Length > 0)
+            {
+                using var stream = request.Arg!.img_url!.OpenReadStream();
+                var url = await savePhotoToCloud.UploadPhotoAsync(stream, request.Arg.img_url.FileName);
+                urlImgInDB = url;
+            }
+
+            if (request.Arg?.img_url != null)
+            {
+                if (currentProject.img_url != null)
+                {
+                    await savePhotoToCloud.DeletePhotoAsync(currentProject.img_url);
+                }
+            }
+
             var projectTech = await dbContext.Teches
                         .AsNoTracking()
                         .Where(x => x.project_id == request.Project_Id)
@@ -48,8 +67,14 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
             {
                 dbContext.Teches.Remove(tech);
             }
-            currentProject.CreateNewTech(request.Arg.tech!, currentProject.Id);
-            currentProject.Update(request.Arg);
+            if (request.Arg?.tech != null)
+                currentProject.CreateNewTech(request.Arg.tech, currentProject.Id);
+
+            if (request.Arg == null)
+            {
+                throw new ArgumentNullException(nameof(request.Arg));
+            }
+            currentProject.Update(request.Arg, urlImgInDB);
 
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {

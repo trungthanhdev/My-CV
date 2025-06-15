@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using ZEN.Contract.AspAccountDto;
 using ZEN.Domain.Common.Authenticate;
 using ZEN.Domain.Definition;
+using ZEN.Domain.Interfaces;
 using ZEN.Infrastructure.Mysql.Persistence;
 
 namespace ZEN.Application.Usecases.UserUC.Commands
@@ -22,11 +23,19 @@ namespace ZEN.Application.Usecases.UserUC.Commands
     public class UpdateProfileCommandHandler(
         IUnitOfWork unitOfWork,
         IUserIdentifierProvider provider,
-        AppDbContext dbContext
+        AppDbContext dbContext,
+        ISavePhotoToCloud savePhotoToCloud
     ) : ICommandHandler<UpdateProfileCommand, OkResponse>
     {
         public async Task<CTBaseResult<OkResponse>> Handle(UpdateProfileCommand request, CancellationToken cancellationToken)
         {
+            var urlImgInDB = "";
+            if (request.Arg.avatar != null || request.Arg?.avatar?.Length > 0)
+            {
+                using var stream = request.Arg!.avatar!.OpenReadStream();
+                var url = await savePhotoToCloud.UploadPhotoAsync(stream, request.Arg.avatar.FileName);
+                urlImgInDB = url;
+            }
             var currentUser = await dbContext.Users
                 .FirstOrDefaultAsync(x => x.Id == request.User_id, cancellationToken);
 
@@ -35,8 +44,10 @@ namespace ZEN.Application.Usecases.UserUC.Commands
 
             if (provider.UserId != request.User_id)
                 throw new UnauthorizedAccessException("You have no permission!");
+            if (request.Arg == null)
+                throw new ArgumentNullException(nameof(request.Arg));
 
-            currentUser.Update(request.Arg);
+            currentUser.Update(request.Arg, urlImgInDB);
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {
                 return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.Id} updated successfully!"));

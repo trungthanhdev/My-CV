@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using DotNetEnv;
-using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using SixLabors.ImageSharp.Formats.Jpeg;
 using ZEN.Domain.Interfaces;
 
 namespace ZEN.Infrastructure.Integrations.CloudStorage
@@ -16,6 +14,7 @@ namespace ZEN.Infrastructure.Integrations.CloudStorage
         private readonly string _cloudName;
         private readonly string _apiKey;
         private readonly string _apiSecret;
+
         public SavePhotoToCloud()
         {
             Env.Load();
@@ -25,9 +24,33 @@ namespace ZEN.Infrastructure.Integrations.CloudStorage
             var acc = new Account(_cloudName, _apiKey, _apiSecret);
             _cloudinary = new Cloudinary(acc);
         }
-        public async Task<bool> DeletePhotoAsync(string publicId)
+
+        public async Task<bool> DeletePhotoAsync(string? img_url)
         {
-            var deleteParams = new DeletionParams(publicId);
+            if (string.IsNullOrWhiteSpace(img_url))
+                return false;
+
+            var uri = new Uri(img_url);
+            var segments = uri.Segments;
+
+            // Tìm vị trí upload/
+            var uploadIndex = Array.FindIndex(segments, s => s.Trim('/').Equals("upload", StringComparison.OrdinalIgnoreCase));
+            if (uploadIndex == -1)
+                throw new Exception("Invalid Cloudinary URL format");
+
+            // Lấy phần sau upload/ và sau version vxxxx
+            var publicIdSegments = segments.Skip(uploadIndex + 2) // bỏ cả version vxxxx/
+                                            .Select(s => Uri.UnescapeDataString(s.Trim('/'))) // giải mã các kí tự encode như %20 thành khoảng trắng
+                                            .ToArray();
+
+            var fullFileName = string.Join("/", publicIdSegments); // vì có thể có folder
+            var extensionIndex = fullFileName.LastIndexOf('.');
+            if (extensionIndex >= 0)
+            {
+                fullFileName = fullFileName.Substring(0, extensionIndex); // bỏ phần mở rộng
+            }
+
+            var deleteParams = new DeletionParams(fullFileName);
             var result = await _cloudinary.DestroyAsync(deleteParams);
             return result.Result == "ok";
         }
@@ -39,9 +62,11 @@ namespace ZEN.Infrastructure.Integrations.CloudStorage
                 await fileStream.CopyToAsync(memoryStream);
                 memoryStream.Position = 0;
 
+                var compressedStream = await CompressImageAsync(memoryStream);
+
                 var uploadParams = new ImageUploadParams()
                 {
-                    File = new FileDescription(fileName, memoryStream),
+                    File = new FileDescription(fileName, compressedStream),
                     PublicId = fileName,
                     Overwrite = true
                 };
@@ -52,6 +77,27 @@ namespace ZEN.Infrastructure.Integrations.CloudStorage
 
                 return uploadResult.SecureUrl.AbsoluteUri;
             }
+        }
+
+        private async Task<Stream> CompressImageAsync(Stream inputStream)
+        {
+            inputStream.Position = 0;
+
+            using var image = await Image.LoadAsync(inputStream);
+            image.Mutate(x => x.Resize(new ResizeOptions
+            {
+                Mode = ResizeMode.Max,
+                Size = new SixLabors.ImageSharp.Size(1024, 1024)
+            }));
+
+            var outputStream = new MemoryStream();
+            await image.SaveAsJpegAsync(outputStream, new JpegEncoder
+            {
+                Quality = 75
+            });
+
+            outputStream.Position = 0;
+            return outputStream;
         }
     }
 }

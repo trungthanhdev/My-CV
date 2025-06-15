@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ZEN.Contract.ProjectDto.Request
 {
@@ -18,7 +19,7 @@ namespace ZEN.Contract.ProjectDto.Request
         public string? duration { get; set; }
         public string? from { get; set; }
         public string? to { get; set; }
-        public string? img_url { get; set; }
+        public IFormFile? img_url { get; set; }
 
     }
     public class TechDto

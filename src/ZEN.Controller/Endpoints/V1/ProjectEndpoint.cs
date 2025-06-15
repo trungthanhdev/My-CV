@@ -59,7 +59,7 @@ namespace ZEN.Controller.Endpoints.V1
         private async Task<IResult> UpdateProject(
             [FromServices] IMediator mediator,
             [FromRoute] string project_id,
-            [FromBody] ReqUpdateProjectDto arg
+            [FromForm] ReqUpdateProjectDto arg
         )
         {
             try

@@ -96,7 +96,7 @@ public class AspUser : IdentityUser, IAggregationRoot
         return new AspUser(fullname, university_name, address, phone_number, github, dob, avatar, email, position_career, expOfYear, background, mindset, linkedin_url, facebook_url, GPA);
     }
 
-    public void Update(ReqUserDto userDto)
+    public void Update(ReqUserDto userDto, string ava_url)
     {
         this.fullname = userDto.fullname ?? this.fullname;
         this.university_name = userDto.university_name ?? this.university_name;
@@ -105,7 +105,7 @@ public class AspUser : IdentityUser, IAggregationRoot
         this.github = userDto.github ?? this.github;
         this.dob = userDto.dob ?? this.dob;
         this.Email = userDto.email ?? this.Email;
-        this.avatar = userDto.avatar ?? this.avatar;
+        this.avatar = ava_url ?? this.avatar;
         this.position_career = userDto.position_career ?? this.position_career;
         this.expOfYear = userDto.expOfYear ?? this.expOfYear;
         this.background = userDto.background ?? this.background;
