@@ -13,9 +13,9 @@ namespace ZEN.Infrastructure.Integrations.SendMail
         public SendMail()
         {
             Env.Load();
-            _apiKeySendMail = Env.GetString("SENDGRIDAPIKEY");
-            _template = Env.GetString("SENDGRIDTEMPLATE");
-            _verifiedEmail = Env.GetString("VERIFIEDEMAIL");
+            _apiKeySendMail = Environment.GetEnvironmentVariable("SENDGRIDAPIKEY") ?? throw new InvalidOperationException("SENDGRIDAPIKEY not found."); ;
+            _template = Environment.GetEnvironmentVariable("SENDGRIDTEMPLATE") ?? throw new InvalidOperationException("SENDGRIDTEMPLATE not found."); ;
+            _verifiedEmail = Environment.GetEnvironmentVariable("VERIFIEDEMAIL") ?? throw new InvalidOperationException("VERIFIEDEMAIL not found."); ;
         }
         public async Task<bool> SendHrContactEmailAsync(HrContactDto hrContact)
         {
