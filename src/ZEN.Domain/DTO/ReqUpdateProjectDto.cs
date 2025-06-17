@@ -20,6 +20,8 @@ namespace ZEN.Contract.ProjectDto.Request
         public string? from { get; set; }
         public string? to { get; set; }
         public IFormFile? img_url { get; set; }
+        public string? url_contract { get; set; }
+        public string? url_excel { get; set; }
 
     }
     public class TechDto

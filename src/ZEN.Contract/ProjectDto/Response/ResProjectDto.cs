@@ -20,6 +20,8 @@ namespace ZEN.Contract.ProjectDto.Response
         public string? duration { get; set; }
         public string? from { get; set; }
         public string? to { get; set; }
+        public string? url_contract { get; set; }
+        public string? url_excel { get; set; }
         public List<TechDto>? teches { get; set; }
     }
 }

@@ -4,15 +4,23 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 
 ---
 
+---
+
+## 👇 Visit now
+
+Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.vercel.app/trung-thanh)
+
+---
+
 ## 📌 Features
 
 - Personal profile and CV data management
 - Modular & maintainable DDD structure
 - Clean Architecture (Domain → Application → Infrastructure → API)
 - RESTful endpoints with versioning (optional)
+- Minimal API
 - PostgreSQL via [Neon](https://neon.tech/)
 - (Optional) Authentication/Authorization layer
-- (Optional) Unit & integration test structure
 
 ---
 

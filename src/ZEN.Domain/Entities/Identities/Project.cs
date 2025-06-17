@@ -25,6 +25,8 @@ namespace ZEN.Domain.Entities.Identities
         public string? from { get; set; }
         public string? to { get; set; }
         public string? img_url { get; set; }
+        public string? url_contract { get; set; }
+        public string? url_excel { get; set; }
 
         public virtual List<UserProject> UserProjects { get; set; } = [];
         public virtual List<Tech> Teches { get; set; } = [];
@@ -44,7 +46,9 @@ namespace ZEN.Domain.Entities.Identities
         string? duration,
         string? from,
         string? to,
-        string? img_url
+        string? img_url,
+        string? url_contract,
+        string? url_excel
     )
         {
             this.project_name = project_name;
@@ -58,6 +62,8 @@ namespace ZEN.Domain.Entities.Identities
             this.from = from;
             this.to = to;
             this.img_url = img_url;
+            this.url_contract = url_contract;
+            this.url_excel = url_excel;
             Validate();
         }
         private void Validate()
@@ -80,10 +86,12 @@ namespace ZEN.Domain.Entities.Identities
                 string? duration,
                 string? from,
                 string? to,
-                string? img_url
+                string? img_url,
+                string? url_contract,
+                string? url_excel
             )
         {
-            return new Project(project_name, description, project_type, is_reality, url_project, url_demo, url_github, duration, from, to, img_url);
+            return new Project(project_name, description, project_type, is_reality, url_project, url_demo, url_github, duration, from, to, img_url, url_contract, url_excel);
         }
 
         public void Update(ReqUpdateProjectDto reqUpdateProjectDto, string updated_img)

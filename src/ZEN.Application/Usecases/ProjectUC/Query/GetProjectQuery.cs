@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CTCore.DynamicQuery.Core.Mediators.Abstraction;
 using CTCore.DynamicQuery.Core.Mediators.Interfaces;
@@ -8,11 +9,13 @@ using CTCore.DynamicQuery.Core.Primitives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.OData.Results;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ZEN.Contract.ProjectDto.Request;
 using ZEN.Contract.ProjectDto.Response;
 using ZEN.Contract.ResponsePagination;
 using ZEN.Domain.Common.Authenticate;
 using ZEN.Domain.Entities.Identities;
+using ZEN.Domain.Interfaces;
 using ZEN.Infrastructure.Mysql.Persistence;
 
 namespace ZEN.Application.Usecases.ProjectUC.Query
@@ -24,11 +27,31 @@ namespace ZEN.Application.Usecases.ProjectUC.Query
     }
     public class GetProjectQueryHandler(
         AppDbContext dbContext,
-        IUserIdentifierProvider provider
+        IUserIdentifierProvider provider,
+        IRedisCache redisCache,
+        ILogger<GetProjectQuery> _logger
     ) : IQueryHandler<GetProjectQuery, PageResultResponse<ResProjectDto>>
     {
         public async Task<CTBaseResult<PageResultResponse<ResProjectDto>>> Handle(GetProjectQuery request, CancellationToken cancellationToken)
         {
+            var cacheKey = $"pu:{provider.UserId}:p:{request.Page_Index}:s:{request.Page_Size}";
+            try
+            {
+                var data = await redisCache.GetAsync(cacheKey);
+                if (data != null)
+                {
+                    var parseData = JsonSerializer.Deserialize<PageResultResponse<ResProjectDto>>(data);
+                    if (parseData != null)
+                    {
+                        return new CTBaseResult<PageResultResponse<ResProjectDto>>(parseData);
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogWarning($"Project in Redis of user {provider.UserId} is empty!, with error: {ex.Message}");
+            }
+
             if (request.Page_Index < 1 || request.Page_Size < 1)
                 throw new BadHttpRequestException("Page Size and Page Index must be equal or greater than 1");
 
@@ -44,7 +67,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Query
                             .Where(x => userProjectIds.Contains(x.Id))
                             .CountAsync(cancellationToken);
 
-            System.Console.WriteLine($"total_item: {total_item}");
+            _logger.LogInformation($"total_item: {total_item} of {provider.UserId}");
             var dataList = await dbContext.Projects
                     .AsNoTracking()
                     .Where(x => userProjectIds.Contains(x.Id))
@@ -69,14 +92,27 @@ namespace ZEN.Application.Usecases.ProjectUC.Query
                         teches = x.Teches.Select(t => new TechDto
                         {
                             tech_name = t.tech_name!
-                        }).ToList()
+                        }).ToList(),
+                        url_contract = x.url_contract,
+                        url_excel = x.url_excel
                     })
                     .ToListAsync(cancellationToken);
-            return new CTBaseResult<PageResultResponse<ResProjectDto>>(new PageResultResponse<ResProjectDto>
+            var result = new PageResultResponse<ResProjectDto>
             {
                 total_item = total_item,
                 data = dataList
-            });
+            };
+
+            if (dataList.Any())
+            {
+                await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(result), TimeSpan.FromMinutes(5));
+            }
+            else
+            {
+                _logger.LogInformation($"User {provider.UserId} does not have any project yet!");
+            }
+
+            return new CTBaseResult<PageResultResponse<ResProjectDto>>(result);
         }
     }
 }

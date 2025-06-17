@@ -38,7 +38,7 @@ namespace ZEN.Application.Usecases.SkillUC.Queries
                     .Where(x => x.user_id == currentUser.Id)
                     .Select(x => new ResSkillDto
                     {
-                        skill_id = x.Id,
+                        skill_id = x.skill_id,
                         skill_name = x.Skill.skill_name,
                         position = x.Skill.position
                     })

@@ -49,7 +49,9 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
                 duration: dto.duration,
                 from: dto.from,
                 to: dto.to,
-                img_url: urlImgInDB
+                img_url: urlImgInDB,
+                url_contract: dto.url_contract,
+                url_excel: dto.url_excel
             );
             projectRepo.Add(newProject);
             if (dto.tech is null) throw new BadHttpRequestException("Tech are required!");

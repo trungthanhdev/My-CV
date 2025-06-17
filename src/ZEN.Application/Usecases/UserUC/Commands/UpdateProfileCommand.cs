@@ -70,11 +70,11 @@ namespace ZEN.Application.Usecases.UserUC.Commands
                 facebook_url = currentUser.facebook_url
             };
 
-            var cacheKey = $"profile:{currentUserRedis.user_id}";
-            await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUserRedis), TimeSpan.FromMinutes(10));
-
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {
+                var cacheKey = $"profile:{currentUserRedis.user_id}";
+                await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUserRedis));
+
                 return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.Id} updated successfully!"));
             }
             return CTBaseResult.ErrorServer("Nothing changes!");

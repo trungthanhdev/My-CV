@@ -73,7 +73,7 @@ namespace ZEN.Application.Usecases.UserUC.Queries
             {
                 if (currentUser != null)
                 {
-                    await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUser), TimeSpan.FromMinutes(10));
+                    await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUser));
                 }
             }
             catch (Exception ex)
