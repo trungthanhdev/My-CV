@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using CTCore.DynamicQuery.Common.Exceptions;
 using CTCore.DynamicQuery.Core.Domain;
 using Microsoft.AspNetCore.Http;
 using ZEN.Domain.DTO.WorkExperienceDto.Request;
+using ZEN.Domain.Interfaces;
 
 namespace ZEN.Domain.Entities.Identities
 {
-    public class WorkExperience : CTBaseEntity
+    public class WorkExperience : CTBaseEntity, IAggregationRoot
     {
         [ForeignKey(nameof(AspUser))]
         public string? user_id { get; set; }
@@ -20,7 +22,8 @@ namespace ZEN.Domain.Entities.Identities
         public string? duration { get; set; }
         public string? description { get; set; }
         public string? project_id { get; set; }
-
+        public virtual List<MyTask> MyTasks { get; set; } = [];
+        private IReadOnlyCollection<MyTask> myTask => MyTasks.AsReadOnly();
         private WorkExperience() { }
         private WorkExperience(
             string user_id,
@@ -63,6 +66,18 @@ namespace ZEN.Domain.Entities.Identities
             this.duration = dto.duration ?? duration;
             this.position = dto.position ?? position;
             this.project_id = dto.project_id ?? project_id;
+        }
+
+        public void AddMyTask(string task_description)
+        {
+            var myTask = MyTask.Create(this.Id, task_description);
+            MyTasks.Add(myTask);
+        }
+        public void UpdateMyTask(string myTask_id, string updateMyTask)
+        {
+            var currentTask = MyTasks.FirstOrDefault(x => x.Id == myTask_id);
+            if (currentTask is null) throw new NotFoundException("");
+            currentTask.Update(updateMyTask);
         }
     }
 }

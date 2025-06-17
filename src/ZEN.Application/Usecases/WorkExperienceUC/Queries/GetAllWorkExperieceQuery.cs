@@ -10,17 +10,17 @@ using ZEN.Infrastructure.Mysql.Persistence;
 
 namespace ZEN.Application.Usecases.WorkExperienceUC.Queries
 {
-    public class GetAllWorkExperieceQuery(int page_index, int page_size) : IQuery<PageResultResponse<ResWEDto>>
+    public class GetAllWorkExperienceQuery(int page_index, int page_size) : IQuery<PageResultResponse<ResWEDto>>
     {
         public int Page_Index = page_index;
         public int Page_Size = page_size;
     }
-    public class GetAllWorkExperiecQueryHandler(
+    public class GetAllWorkExperienceQueryHandler(
         AppDbContext dbContext,
         IUserIdentifierProvider provider
-    ) : IQueryHandler<GetAllWorkExperieceQuery, PageResultResponse<ResWEDto>>
+    ) : IQueryHandler<GetAllWorkExperienceQuery, PageResultResponse<ResWEDto>>
     {
-        public async Task<CTBaseResult<PageResultResponse<ResWEDto>>> Handle(GetAllWorkExperieceQuery request, CancellationToken cancellationToken)
+        public async Task<CTBaseResult<PageResultResponse<ResWEDto>>> Handle(GetAllWorkExperienceQuery request, CancellationToken cancellationToken)
         {
             if (request.Page_Index < 1 || request.Page_Size < 1)
                 throw new BadHttpRequestException("Page Size and Page Index must be equal or greater than 1");
@@ -36,17 +36,20 @@ namespace ZEN.Application.Usecases.WorkExperienceUC.Queries
 
             var allWE = await dbContext.WorkExperiences
                     .AsNoTracking()
+                    .Include(x => x.MyTasks)
                     .Where(x => x.user_id == provider.UserId)
                     .Skip(skip)
                     .Take(request.Page_Size)
                     .Select(x => new ResWEDto
                     {
+                        we_id = x.Id,
                         user_id = x.user_id,
                         company_name = x.company_name,
                         position = x.position,
                         duration = x.duration,
                         description = x.description,
-                        project_id = x.project_id
+                        project_id = x.project_id,
+                        tasks = x.MyTasks.Select(x => new ResMyTask(x.Id, x.task_description)).ToList()
                     })
                     .ToListAsync(cancellationToken);
             return new CTBaseResult<PageResultResponse<ResWEDto>>(new PageResultResponse<ResWEDto> { total_item = total_item, data = allWE });

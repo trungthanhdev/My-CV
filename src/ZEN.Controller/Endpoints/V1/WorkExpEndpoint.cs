@@ -83,7 +83,7 @@ namespace ZEN.Controller.Endpoints.V1
         {
             try
             {
-                return (await mediator.Send(new GetAllWorkExperieceQuery(page_index, page_size))).ToOk(e => Results.Ok(e));
+                return (await mediator.Send(new GetAllWorkExperienceQuery(page_index, page_size))).ToOk(e => Results.Ok(e));
             }
             catch (NotFoundException ex)
             {

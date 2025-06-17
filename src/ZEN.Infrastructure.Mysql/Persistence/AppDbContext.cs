@@ -31,6 +31,8 @@ public class AppDbContext : IdentityDbContext<AspUser>
     public DbSet<UserSkill> UserSkills { get; set; }
     public DbSet<WorkExperience> WorkExperiences { get; set; }
     public DbSet<Tech> Teches { get; set; }
+    public DbSet<MyTask> MyTasks { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -23,8 +23,11 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 - **Cloud Hosting**: Render (Docker-based deployment) (https://my-cv-suxl.onrender.com/swagger/index.html)
 - **Database**: PostgreSQL (hosted on Neon)
 - **ORM**: Entity Framework Core (if applicable)
-- **Platform**: macOS / cross-platform
+- **Platform**: WebApp
 - **Containerization**: Docker
+- **Caching**: Redis
+- **Media Storage**: Cloudinary (image hosting, optimization)
+- **Email Service**: SendGrid
 
 ---
 
@@ -34,6 +37,8 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 
 - [.NET SDK 9.0+](https://dotnet.microsoft.com/download)
 - PostgreSQL connection string (Neon or local)
+- Cloudinary connection string
+- Redis cloud connectionstring
 
 ### 🛠 Setup
 

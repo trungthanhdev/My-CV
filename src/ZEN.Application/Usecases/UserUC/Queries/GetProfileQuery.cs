@@ -69,7 +69,6 @@ namespace ZEN.Application.Usecases.UserUC.Queries
                         })
                         .FirstOrDefaultAsync(cancellationToken);
 
-            // await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUser), TimeSpan.FromMinutes(10));
             try
             {
                 if (currentUser != null)
