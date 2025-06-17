@@ -83,6 +83,7 @@ namespace ZEN.Application.Usecases.UserUC.Commands
                 {
                     await redisCache.SetAsync(cacheKey!, JsonSerializer.Serialize(currentUserAttribure), TimeSpan.FromMinutes(10));
                 }
+
                 return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.Id} updated successfully!"));
             }
             return CTBaseResult.ErrorServer("Nothing changes!");
