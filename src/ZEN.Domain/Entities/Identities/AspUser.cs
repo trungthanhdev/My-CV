@@ -22,10 +22,10 @@ public class AspUser : IdentityUser, IAggregationRoot
     public string? address { get; set; }
     public string? phone_number { get; set; }
     public string? github { get; set; }
-    public DateTime? dob { get; set; }
+    public string? dob { get; set; }
     public string? avatar { get; set; }
     public string? position_career { get; set; }
-    public int? expOfYear { get; set; }
+    public string? expOfYear { get; set; }
     public string? background { get; set; }
     public string? mindset { get; set; }
     public string? linkedin_url { get; set; }
@@ -48,11 +48,11 @@ public class AspUser : IdentityUser, IAggregationRoot
         string? address,
         string? phone_number,
         string? github,
-        DateTime? dob,
+        string? dob,
         string? avatar,
         string? email,
         string? position_career,
-        int? expOfYear,
+        string? expOfYear,
         string? background,
         string? mindset,
         string? linkedin_url,
@@ -82,11 +82,11 @@ public class AspUser : IdentityUser, IAggregationRoot
         string? address = null,
         string? phone_number = null,
         string? github = null,
-        DateTime? dob = null,
+        string? dob = null,
         string? avatar = null,
         string? email = null,
         string? position_career = null,
-        int? expOfYear = null,
+        string? expOfYear = null,
         string? background = null,
         string? mindset = null,
         string? linkedin_url = null,
@@ -166,7 +166,7 @@ public class AspUserConfiguration : IEntityTypeConfiguration<AspUser>
             NormalizedEmail = "BUITHANH10112000@GMAIL.COM",
             EmailConfirmed = true,
             fullname = "Bùi Nguyễn Trung Thành",
-            dob = new DateTime(2003, 11, 10, 0, 0, 0, DateTimeKind.Utc),
+            dob = "10/11/2003",
             phone_number = "0878508886",
             address = "Thành phố Hồ Chí Minh, Vietnam",
             university_name = "Trường Đại học Công nghệ TP.HCM - HUTECH",
@@ -187,7 +187,7 @@ public class AspUserConfiguration : IEntityTypeConfiguration<AspUser>
             fullname = "Nguyễn Trung Huy",
             SecurityStamp = "9edcbd37-fa5c-4530-bf5f-d6c67a77883c",
             ConcurrencyStamp = "4f5e70b3-5b7c-489c-b4e5-fd24fb711d0d",
-            dob = new DateTime(2001, 3, 8, 0, 0, 0, DateTimeKind.Utc),
+            dob = "10/11/2003",
             phone_number = "0917764302",
             address = "Thành phố Hồ Chí Minh, Vietnam",
             university_name = "Trường Đại học Công nghệ TP.HCM - HUTECH",

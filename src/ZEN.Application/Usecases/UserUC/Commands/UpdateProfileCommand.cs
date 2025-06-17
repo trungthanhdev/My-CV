@@ -36,6 +36,10 @@ namespace ZEN.Application.Usecases.UserUC.Commands
 
             if (currentUser == null)
                 throw new NotFoundException("User not found");
+            if (provider.UserId != request.User_id)
+                throw new UnauthorizedAccessException("You have no permission!");
+            if (request.Arg == null)
+                throw new ArgumentNullException(nameof(request.Arg));
 
             var urlImgInDB = currentUser.avatar ?? "";
             if (request.Arg.avatar != null || request.Arg?.avatar?.Length > 0)
@@ -45,27 +49,32 @@ namespace ZEN.Application.Usecases.UserUC.Commands
                 urlImgInDB = url;
             }
 
-            if (provider.UserId != request.User_id)
-                throw new UnauthorizedAccessException("You have no permission!");
-            if (request.Arg == null)
-                throw new ArgumentNullException(nameof(request.Arg));
+            currentUser.Update(request.Arg!, urlImgInDB);
+            var currentUserRedis = new
+            {
+                user_id = currentUser.Id,
+                fullname = currentUser.fullname,
+                university_name = currentUser.university_name,
+                address = currentUser.address,
+                phone_number = currentUser.phone_number,
+                github = currentUser.github,
+                dob = currentUser.dob,
+                avatar = currentUser.avatar,
+                GPA = currentUser.GPA,
+                email = currentUser.Email,
+                workExpOfYear = currentUser.expOfYear,
+                linkedin_url = currentUser.linkedin_url,
+                mindset = currentUser.mindset,
+                position_career = currentUser.position_career,
+                background = currentUser.background,
+                facebook_url = currentUser.facebook_url
+            };
 
-            currentUser.Update(request.Arg, urlImgInDB);
-
+            var cacheKey = $"profile:{currentUserRedis.user_id}";
+            await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUserRedis), TimeSpan.FromMinutes(10));
 
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {
-                var cacheKey = $"profile:{currentUser.Id}";
-                if (cacheKey != null)
-                {
-                    await redisCache.RemoveAsync(cacheKey);
-                    await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUser), TimeSpan.FromMinutes(10));
-                }
-                else
-                {
-                    await redisCache.SetAsync(cacheKey!, JsonSerializer.Serialize(currentUser), TimeSpan.FromMinutes(10));
-                }
-
                 return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.Id} updated successfully!"));
             }
             return CTBaseResult.ErrorServer("Nothing changes!");

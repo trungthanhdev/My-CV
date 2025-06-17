@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZEN.Infrastructure.Mysql.Persistence;
@@ -11,9 +12,11 @@ using ZEN.Infrastructure.Mysql.Persistence;
 namespace ZEN.Infrastructure.Mysql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250617054855_changeType")]
+    partial class changeType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,8 +221,8 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                     b.Property<string>("background")
                         .HasColumnType("text");
 
-                    b.Property<string>("dob")
-                        .HasColumnType("text");
+                    b.Property<DateTime?>("dob")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("expOfYear")
                         .HasColumnType("text");
@@ -278,7 +281,7 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                             TwoFactorEnabled = false,
                             UserName = "trungthanh",
                             address = "Thành phố Hồ Chí Minh, Vietnam",
-                            dob = "10/11/2003",
+                            dob = new DateTime(2003, 11, 10, 0, 0, 0, 0, DateTimeKind.Utc),
                             fullname = "Bùi Nguyễn Trung Thành",
                             github = "https://github.com/trungthanhdev",
                             phone_number = "0878508886",
@@ -300,7 +303,7 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                             TwoFactorEnabled = false,
                             UserName = "trunghuy",
                             address = "Thành phố Hồ Chí Minh, Vietnam",
-                            dob = "10/11/2003",
+                            dob = new DateTime(2001, 3, 8, 0, 0, 0, 0, DateTimeKind.Utc),
                             fullname = "Nguyễn Trung Huy",
                             github = "https://github.com/trunghuydev",
                             phone_number = "0917764302",

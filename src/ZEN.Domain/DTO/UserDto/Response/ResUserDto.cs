@@ -13,11 +13,11 @@ namespace ZEN.Domain.DTO.UserDto.Response
         public string? address { get; set; }
         public string? phone_number { get; set; }
         public string? github { get; set; }
-        public DateTime? dob { get; set; }
+        public string? dob { get; set; }
         public string? avatar { get; set; }
         public double? GPA { get; set; }
         public string? email { get; set; }
-        public double? workExpOfYear { get; set; }
+        public string? workExpOfYear { get; set; }
         public string? linkedin_url { get; set; }
         public string? mindset { get; set; }
         public string? position_career { get; set; }

@@ -41,6 +41,12 @@ namespace ZEN.Controller.Endpoints.V1
         {
             try
             {
+                double sizeInMB = 0.0;
+                if (arg.avatar != null)
+                {
+                    sizeInMB = arg.avatar.Length / (1024.0 * 1024.0);
+                    Console.WriteLine($"==> Avatar Size: {sizeInMB:F2} MB");
+                }
                 return (await mediator.Send(new UpdateProfileCommand(arg, user_id))).ToOk(e => Results.Ok(e));
             }
             catch (NotFoundException ex)
