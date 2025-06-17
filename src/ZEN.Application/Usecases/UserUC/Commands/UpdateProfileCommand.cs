@@ -51,37 +51,19 @@ namespace ZEN.Application.Usecases.UserUC.Commands
                 throw new ArgumentNullException(nameof(request.Arg));
 
             currentUser.Update(request.Arg, urlImgInDB);
-            var currentUserAttribure = new
-            {
-                user_id = currentUser.Id,
-                fullname = currentUser.fullname,
-                university_name = currentUser.university_name,
-                address = currentUser.address,
-                phone_number = currentUser.phone_number,
-                github = currentUser.github,
-                dob = currentUser.dob,
-                avatar = currentUser.avatar,
-                GPA = currentUser.GPA,
-                email = currentUser.Email,
-                workExpOfYear = currentUser.expOfYear,
-                linkedin_url = currentUser.linkedin_url,
-                mindset = currentUser.mindset,
-                position_career = currentUser.position_career,
-                background = currentUser.background,
-                facebook_url = currentUser.facebook_url
-            };
+
 
             if (await unitOfWork.SaveChangeAsync(cancellationToken) > 0)
             {
-                var cacheKey = $"profile:{currentUserAttribure.user_id}";
+                var cacheKey = $"profile:{currentUser.Id}";
                 if (cacheKey != null)
                 {
                     await redisCache.RemoveAsync(cacheKey);
-                    await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUserAttribure), TimeSpan.FromMinutes(10));
+                    await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUser), TimeSpan.FromMinutes(10));
                 }
                 else
                 {
-                    await redisCache.SetAsync(cacheKey!, JsonSerializer.Serialize(currentUserAttribure), TimeSpan.FromMinutes(10));
+                    await redisCache.SetAsync(cacheKey!, JsonSerializer.Serialize(currentUser), TimeSpan.FromMinutes(10));
                 }
 
                 return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.Id} updated successfully!"));
