@@ -79,9 +79,10 @@ namespace ZEN.Application.Usecases.UserUC.Commands
                     await redisCache.RemoveAsync(cacheKey);
                     await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUserAttribure), TimeSpan.FromMinutes(10));
                 }
-
-                await redisCache.SetAsync(cacheKey!, JsonSerializer.Serialize(currentUserAttribure), TimeSpan.FromMinutes(10));
-
+                else
+                {
+                    await redisCache.SetAsync(cacheKey!, JsonSerializer.Serialize(currentUserAttribure), TimeSpan.FromMinutes(10));
+                }
                 return new CTBaseResult<OkResponse>(new OkResponse($"User {currentUser.Id} updated successfully!"));
             }
             return CTBaseResult.ErrorServer("Nothing changes!");
