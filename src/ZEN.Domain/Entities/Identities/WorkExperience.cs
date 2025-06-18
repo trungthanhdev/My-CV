@@ -76,7 +76,7 @@ namespace ZEN.Domain.Entities.Identities
         public void UpdateMyTask(string myTask_id, string updateMyTask)
         {
             var currentTask = MyTasks.FirstOrDefault(x => x.Id == myTask_id);
-            if (currentTask is null) throw new NotFoundException("");
+            if (currentTask is null) throw new NotFoundException("Task not found!");
             currentTask.Update(updateMyTask);
         }
     }

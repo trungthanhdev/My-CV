@@ -7,6 +7,7 @@ namespace ZEN.Contract.MyTaskDto.Request
 {
     public class ReqMyTaskDto
     {
+        public string? myTask_id { get; set; }
         public string? task_description { get; set; }
     }
 }
