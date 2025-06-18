@@ -2,6 +2,7 @@
 using ZEN.Controller;
 using ZEN.Controller.Extensions;
 using ZEN.Infrastructure.Mysql.Persistence;
+using Quartz;
 
 DotNetEnv.Env.Load();
 DotNetEnv.Env.TraversePath().Load();
@@ -9,6 +10,23 @@ DotNetEnv.Env.TraversePath().Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
+builder.Logging.AddConsole(); // để hiển thị log ra console
+builder.Logging.SetMinimumLevel(LogLevel.Trace);
+
+builder.Services.AddQuartz(q =>
+{
+    var jobKey = new JobKey("PingSelfJob");
+    q.AddJob<PingSelfJob>(opts => opts.WithIdentity(jobKey));
+
+
+    q.AddTrigger(opts => opts
+        .ForJob(jobKey)
+        .WithIdentity("PingSelfTrigger")
+        .WithCronSchedule("0 */5 * * * ?")
+    );
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 if (!bool.Parse(Environment.GetEnvironmentVariable("DB_LOGGING") ?? "True"))
 {
@@ -25,6 +43,7 @@ builder.Services.AddControllers()
     });
 
 var app = builder.Build();
+app.MapGet("/healthcheck", () => Results.Ok("Server is alive!"));
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
