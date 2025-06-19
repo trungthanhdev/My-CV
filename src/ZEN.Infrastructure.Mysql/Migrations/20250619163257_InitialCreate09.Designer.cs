@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZEN.Infrastructure.Mysql.Persistence;
@@ -11,9 +12,11 @@ using ZEN.Infrastructure.Mysql.Persistence;
 namespace ZEN.Infrastructure.Mysql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250619163257_InitialCreate09")]
+    partial class InitialCreate09
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,7 +327,7 @@ namespace ZEN.Infrastructure.Mysql.Migrations
 
                     b.HasIndex("user_id");
 
-                    b.ToTable("CERTIFICATE", (string)null);
+                    b.ToTable("CERTIFICATE");
                 });
 
             modelBuilder.Entity("ZEN.Domain.Entities.Identities.MyTask", b =>
@@ -615,8 +618,7 @@ namespace ZEN.Infrastructure.Mysql.Migrations
                 {
                     b.HasOne("ZEN.Domain.Entities.AspUser", "AspUser")
                         .WithMany("Certificates")
-                        .HasForeignKey("user_id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("user_id");
 
                     b.Navigation("AspUser");
                 });

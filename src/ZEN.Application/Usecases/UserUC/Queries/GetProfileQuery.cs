@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CTCore.DynamicQuery.Common.Exceptions;
 using CTCore.DynamicQuery.Core.Mediators.Interfaces;
 using CTCore.DynamicQuery.Core.Primitives;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
 using ZEN.Domain.Common.Authenticate;
 using ZEN.Domain.DTO.UserDto.Response;
@@ -48,6 +49,7 @@ namespace ZEN.Application.Usecases.UserUC.Queries
             var currentUser = await dbContext.Users
                         .AsNoTracking()
                         .Where(x => x.Id == provider.UserId)
+                        .Include(x => x.Certificates)
                         .Select(x => new ResUserDto
                         {
                             user_id = x.Id,
@@ -65,7 +67,11 @@ namespace ZEN.Application.Usecases.UserUC.Queries
                             mindset = x.mindset,
                             position_career = x.position_career,
                             background = x.background,
-                            facebook_url = x.facebook_url
+                            facebook_url = x.facebook_url,
+                            certificates = x.Certificates.Select(x => new ResponseCertificate
+                            {
+                                certificate_name = x.certificate_name
+                            }).ToList()
                         })
                         .FirstOrDefaultAsync(cancellationToken);
 
@@ -73,7 +79,7 @@ namespace ZEN.Application.Usecases.UserUC.Queries
             {
                 if (currentUser != null)
                 {
-                    await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUser));
+                    await redisCache.SetAsync(cacheKey, JsonSerializer.Serialize(currentUser), TimeSpan.FromHours(1));
                 }
             }
             catch (Exception ex)

@@ -110,6 +110,7 @@ public static class InjectionService
         new ProjectEndpoint().MapEndpoints(app, versionSet);
         new UserEndpoint().MapEndpoints(app, versionSet);
         new MyTaskEndpoint().MapEndpoints(app, versionSet);
+        new CertificateEndpoint().MapEndpoints(app, versionSet);
         // new SendMailEndpoint().MapEndpoints(app, versionSet);
         // new WorkExpEndpoint().MapEndpoints(app, versionSet);
 

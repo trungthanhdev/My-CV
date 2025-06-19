@@ -32,6 +32,7 @@ public class AppDbContext : IdentityDbContext<AspUser>
     public DbSet<WorkExperience> WorkExperiences { get; set; }
     public DbSet<Tech> Teches { get; set; }
     public DbSet<MyTask> MyTasks { get; set; }
+    public DbSet<Certificate> Certificates { get; set; }
 
 
 
@@ -53,6 +54,12 @@ public class AppDbContext : IdentityDbContext<AspUser>
                 .HasOne(us => us.Skill)
                 .WithMany()
                 .HasForeignKey(us => us.skill_id)
+                .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Certificate>()
+                .ToTable("CERTIFICATE")
+                .HasOne(c => c.AspUser)
+                .WithMany(u => u.Certificates)
+                .HasForeignKey(c => c.user_id)
                 .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());

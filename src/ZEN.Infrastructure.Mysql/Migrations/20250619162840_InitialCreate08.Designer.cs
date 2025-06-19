@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ZEN.Infrastructure.Mysql.Persistence;
@@ -11,9 +12,11 @@ using ZEN.Infrastructure.Mysql.Persistence;
 namespace ZEN.Infrastructure.Mysql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250619162840_InitialCreate08")]
+    partial class InitialCreate08
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -613,12 +616,12 @@ namespace ZEN.Infrastructure.Mysql.Migrations
 
             modelBuilder.Entity("ZEN.Domain.Entities.Identities.Certificate", b =>
                 {
-                    b.HasOne("ZEN.Domain.Entities.AspUser", "AspUser")
+                    b.HasOne("ZEN.Domain.Entities.AspUser", "aspUser")
                         .WithMany("Certificates")
                         .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("AspUser");
+                    b.Navigation("aspUser");
                 });
 
             modelBuilder.Entity("ZEN.Domain.Entities.Identities.MyTask", b =>

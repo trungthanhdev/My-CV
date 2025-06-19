@@ -36,9 +36,11 @@ public class AspUser : IdentityUser, IAggregationRoot
     public virtual List<UserSkill> UserSkills { get; set; } = [];
     public virtual List<UserProject> UserProjects { get; set; } = [];
     public virtual List<WorkExperience> WorkExperiences { get; set; } = [];
+    public virtual List<Certificate> Certificates { get; set; } = [];
 
     private IReadOnlyCollection<WorkExperience> we => WorkExperiences.AsReadOnly();
     private IReadOnlyCollection<UserSkill> us => UserSkills.AsReadOnly();
+    private IReadOnlyCollection<Certificate> ce => Certificates.AsReadOnly();
 
 
     public AspUser() { }
@@ -146,6 +148,12 @@ public class AspUser : IdentityUser, IAggregationRoot
             .ToList();
 
         skillsToRemove.ForEach(us => UserSkills.Remove(us));
+    }
+
+    public void AddCertificate(string certificate_name)
+    {
+        var certificate = Certificate.Create(this.Id, certificate_name);
+        Certificates.Add(certificate);
     }
 }
 

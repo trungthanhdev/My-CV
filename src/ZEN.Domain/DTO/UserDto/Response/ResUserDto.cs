@@ -23,5 +23,11 @@ namespace ZEN.Domain.DTO.UserDto.Response
         public string? position_career { get; set; }
         public string? background { get; set; }
         public string? facebook_url { get; set; }
+        public List<ResponseCertificate>? certificates { get; set; }
+    }
+
+    public class ResponseCertificate
+    {
+        public string? certificate_name { get; set; }
     }
 }
