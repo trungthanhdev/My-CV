@@ -155,6 +155,12 @@ public class AspUser : IdentityUser, IAggregationRoot
         var certificate = Certificate.Create(this.Id, certificate_name);
         Certificates.Add(certificate);
     }
+    public void UpdateCertificate(string certificate_id, string certificate_name)
+    {
+        var currentCertificate = Certificates.FirstOrDefault(x => x.Id == certificate_id);
+        if (currentCertificate is null) throw new NotFoundException("Certificate not found1");
+        currentCertificate.Update(certificate_name);
+    }
 }
 
 public class AspUserConfiguration : IEntityTypeConfiguration<AspUser>

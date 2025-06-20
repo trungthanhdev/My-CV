@@ -26,7 +26,8 @@ namespace ZEN.Controller.Endpoints.V1
                     .HasApiVersion(1);
 
 
-            co.MapPost("/", AddCertificate).RequireAuthorization().DisableAntiforgery();
+            co.MapPost("/", AddCertificate).RequireAuthorization();
+            co.MapPatch("/{certificate_id}", UpdateCertificate).RequireAuthorization();
             return endpoints;
         }
 
@@ -38,6 +39,24 @@ namespace ZEN.Controller.Endpoints.V1
             try
             {
                 return (await mediator.Send(new AddCertificateCommand(arg))).ToOk(e => Results.Ok(e));
+            }
+            catch (NotFoundException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 404);
+            }
+            catch (BadHttpRequestException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 404);
+            }
+        }
+        private async Task<IResult> UpdateCertificate(
+            [FromServices] IMediator mediator,
+            [FromBody] ReqCertificateDto arg,
+            [FromRoute] string certificate_id)
+        {
+            try
+            {
+                return (await mediator.Send(new UpdateCertificateCommand(certificate_id, arg))).ToOk(e => Results.Ok(e));
             }
             catch (NotFoundException ex)
             {
