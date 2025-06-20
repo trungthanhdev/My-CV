@@ -33,9 +33,10 @@ Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.
 - **ORM**: Entity Framework Core (if applicable)
 - **Platform**: WebApp
 - **Containerization**: Docker
-- **Caching**: Redis
+- **Caching**: Redis Cloud
 - **Media Storage**: Cloudinary (image hosting, optimization)
 - **Email Service**: SendGrid
+- **CI/CD**: GitHub Actions
 
 ---
 

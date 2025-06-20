@@ -44,7 +44,7 @@ namespace ZEN.Application.Usecases.CertificateUC.Commands
             {
                 return new CTBaseResult<OkResponse>(new OkResponse("Certificate updated successfully!"));
             }
-            return CTBaseResult.ErrorServer(CTErrors.FAIL_TO_SAVE);
+            return CTBaseResult.ErrorServer("Nothing changes!");
         }
     }
 }
