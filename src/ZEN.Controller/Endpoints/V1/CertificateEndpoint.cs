@@ -28,6 +28,7 @@ namespace ZEN.Controller.Endpoints.V1
 
             co.MapPost("/", AddCertificate).RequireAuthorization();
             co.MapPatch("/{certificate_id}", UpdateCertificate).RequireAuthorization();
+            co.MapDelete("/{certificate_id}", DeleteCertificate).RequireAuthorization();
             return endpoints;
         }
 
@@ -63,6 +64,23 @@ namespace ZEN.Controller.Endpoints.V1
                 return Results.Problem(ex.Message, statusCode: 404);
             }
             catch (BadHttpRequestException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 404);
+            }
+        }
+        private async Task<IResult> DeleteCertificate(
+            [FromServices] IMediator mediator,
+            [FromRoute] string certificate_id)
+        {
+            try
+            {
+                return (await mediator.Send(new DeleteCertificateCommand(certificate_id))).ToOk(e => Results.Ok(e));
+            }
+            catch (NotFoundException ex)
+            {
+                return Results.Problem(ex.Message, statusCode: 404);
+            }
+            catch (UnauthorizedAccessException ex)
             {
                 return Results.Problem(ex.Message, statusCode: 404);
             }

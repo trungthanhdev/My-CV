@@ -158,8 +158,16 @@ public class AspUser : IdentityUser, IAggregationRoot
     public void UpdateCertificate(string certificate_id, string certificate_name)
     {
         var currentCertificate = Certificates.FirstOrDefault(x => x.Id == certificate_id);
-        if (currentCertificate is null) throw new NotFoundException("Certificate not found1");
+        if (currentCertificate is null) throw new NotFoundException("Certificate not found!");
         currentCertificate.Update(certificate_name);
+    }
+    public Certificate DeleteCertificate(string certificate_id)
+    {
+        var currentCertificate = Certificates.FirstOrDefault(x => x.Id == certificate_id);
+        if (currentCertificate is null) throw new NotFoundException("Certificate not found!");
+        if (currentCertificate.user_id != this.Id) throw new UnauthorizedAccessException("You have no permission!");
+        Certificates.Remove(currentCertificate);
+        return currentCertificate;
     }
 }
 
