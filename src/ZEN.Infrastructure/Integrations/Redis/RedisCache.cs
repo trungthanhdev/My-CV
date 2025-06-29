@@ -37,6 +37,22 @@ namespace ZEN.Infrastructure.Integrations.Redis
             await _db.KeyDeleteAsync(key);
         }
 
+        public async Task RemoveByPrefixAsync(string prefix)
+        {
+            var endpoints = _redis.GetEndPoints();
+            foreach (var endpoint in endpoints)
+            {
+                var server = _redis.GetServer(endpoint);
+                if (!server.IsConnected) continue;
+                var keys = server.Keys(pattern: $"{prefix}*").ToArray();
+
+                foreach (var key in keys)
+                {
+                    await _db.KeyDeleteAsync(key);
+                }
+            }
+        }
+
         public async Task SetAsync(string key, string value, TimeSpan? expiry = null)
         {
             await _db.StringSetAsync(key, value, expiry);

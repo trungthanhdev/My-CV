@@ -23,6 +23,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
         IUnitOfWork unitOfWork,
         IUserIdentifierProvider provider,
         AppDbContext dbContext,
+        IRedisCache redisCache,
         ISavePhotoToCloud savePhotoToCloud
     ) : ICommandHandler<UpdateProjectCommand, OkResponse>
     {
@@ -42,8 +43,10 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
             {
                 throw new NotFoundException("Project not found!");
             }
+            var cacheKey = $"pu:{provider.UserId}";
+            await redisCache.RemoveByPrefixAsync(cacheKey);
 
-            var urlImgInDB = "";
+            var urlImgInDB = currentProject.img_url;
             if (request.Arg.img_url != null || request.Arg?.img_url?.Length > 0)
             {
                 using var stream = request.Arg!.img_url!.OpenReadStream();
