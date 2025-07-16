@@ -7,7 +7,7 @@
 *.sln.docstates
 tkp.db
 docker-compose.local.yml
-docker-compose.yml
+docker-compose.yaml
 
 
 .env
