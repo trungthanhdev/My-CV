@@ -21,6 +21,7 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 - RESTful endpoints with versioning (optional)
 - Minimal API
 - PostgreSQL via [Neon](https://neon.tech/)
+- Optional authentication/authorization support
 
 ---
 
@@ -50,10 +51,10 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 - Cloudinary connection string
 - Redis cloud connectionstring
 
-### 🛠 Setup
+### 🛠 Setup with VSCode
 
 ```bash
-cd /Applications/Personal\ Project/CV/My-CV
+cd src/My-CV/src/Zen.Infrastructure
 dotnet restore
 cd src/My-CV/ZEN.Startup
 dotnet run
