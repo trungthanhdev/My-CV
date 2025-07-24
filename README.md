@@ -9,6 +9,7 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 ## 👇 Visit now
 
 Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.vercel.app/trung-thanh)
+Explore the APIs: 🌐 [Click here to view](https://my-cv-suxl.onrender.com/swagger/index.html)
 
 ---
 
@@ -20,7 +21,6 @@ Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.
 - RESTful endpoints with versioning (optional)
 - Minimal API
 - PostgreSQL via [Neon](https://neon.tech/)
-- (Optional) Authentication/Authorization layer
 
 ---
 
@@ -28,9 +28,9 @@ Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.
 
 - **.NET SDK**: .NET 9.0
 - **Architecture**: Clean Architecture, DDD
-- **Cloud Hosting**: Render (Docker-based deployment) (https://my-cv-suxl.onrender.com/swagger/index.html)
+- **Cloud Hosting**: Render (Docker-based deployment)
 - **Database**: PostgreSQL (hosted on Neon)
-- **ORM**: Entity Framework Core (if applicable)
+- **ORM**: Entity Framework Core
 - **Platform**: WebApp
 - **Containerization**: Docker
 - **Caching**: Redis Cloud
@@ -45,7 +45,8 @@ Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.
 ### 📦 Prerequisites
 
 - [.NET SDK 9.0+](https://dotnet.microsoft.com/download)
-- PostgreSQL connection string (Neon or local)
+- Init .env, docker-compose.yml in ZEN.Startup
+- PostgreSQL connection string (Neon or PostgreSQL)
 - Cloudinary connection string
 - Redis cloud connectionstring
 
@@ -56,4 +57,11 @@ cd /Applications/Personal\ Project/CV/My-CV
 dotnet restore
 cd src/My-CV/ZEN.Startup
 dotnet run
+```
+
+### 🛠 Setup with Docker
+
+```bash
+cd .../src
+docker compose up --build
 ```
