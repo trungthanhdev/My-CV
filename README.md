@@ -46,7 +46,8 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 ### 📦 Prerequisites
 
 - [.NET SDK 9.0+](https://dotnet.microsoft.com/download)
-- Init .env, docker-compose.yml in ZEN.Startup
+- Create `.env` in `/ZEN.Startup`
+- Create `docker-compose.yml` in `/src`
 - PostgreSQL connection string (Neon or PostgreSQL)
 - Cloudinary connection string
 - Redis cloud connectionstring
