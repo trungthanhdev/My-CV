@@ -8,8 +8,8 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 
 ## 👇 Visit now
 
-Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.vercel.app/trung-thanh)
-Explore the APIs: 🌐 [Click here to view](https://my-cv-suxl.onrender.com/swagger/index.html)
+- Explore the portfolio: 🌐 [Click here to view](https://portfolio-one-sigma-16.vercel.app/trung-thanh)
+- Explore the APIs: 🌐 [Click here to view](https://my-cv-suxl.onrender.com/swagger/index.html)
 
 ---
 
