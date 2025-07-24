@@ -54,15 +54,15 @@ A backend RESTful API developed with **.NET 9**, showcasing personal information
 ### 🛠 Setup with VSCode
 
 ```bash
-cd src/My-CV/src/Zen.Infrastructure
+cd /src/Zen.Infrastructure
 dotnet restore
-cd src/My-CV/ZEN.Startup
+cd /src/My-CV/ZEN.Startup
 dotnet run
 ```
 
 ### 🛠 Setup with Docker
 
 ```bash
-cd .../src
+cd /src
 docker compose up --build
 ```
