@@ -122,7 +122,7 @@ public class AccountEndpointV1 : IEndpoint
             TimeSpan remainingTime = token.CreatedAt.AddMinutes(jwtSettings.Value.AccessTokenExpirationMinutes) - DateTime.UtcNow;
             int newExpiresIn = (int)Math.Max(0, remainingTime.TotalSeconds);
             token.ExpiresIn = newExpiresIn;
-            var response = new { token, user_name = user.UserName, user_id = user.Id };
+            var response = new { token, user_name = user.UserName, user_id = user.Id, email = user.Email };
             return Results.Ok(response);
         }
 
