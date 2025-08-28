@@ -43,7 +43,7 @@ namespace ZEN.Application.Usecases.ProjectUC.Commands
             {
                 throw new NotFoundException("Project not found!");
             }
-            var cacheKey = $"pu:{provider.UserId}";
+            var cacheKey = $"pu:{provider.UserId}:p:1:s:10";
             await redisCache.RemoveByPrefixAsync(cacheKey);
 
             var urlImgInDB = currentProject.img_url;
